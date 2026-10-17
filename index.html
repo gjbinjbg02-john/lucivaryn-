@@ -122,38 +122,17 @@ async function shareEntry(id) {
   if (!e) return;
 
   const text = entryShareText(e);
-  const url = makeShareLink(e);
 
   const choice = prompt(
     "LUCIVARYN — SHARE YOUR CONTENT\n\n" +
-    "Enter 1 to Share as Link\n" +
-    "Enter 2 to Share Content\n" +
-    "Enter 3 to Copy Content\n\n" +
-    "Type 1, 2, or 3:"
+    "1. Share Content\n" +
+    "2. Copy Content\n\n" +
+    "Enter 1 or 2:"
   );
 
   if (choice === null) return;
 
-  const option = choice.trim();
-
-  if (option === "1") {
-    try {
-      if (navigator.share) {
-        await navigator.share({
-          title: e.title,
-          text: "Shared from LUCIVARYN — Illumination That Transforms.",
-          url: url
-        });
-      } else {
-        await copyText(url, "Share link copied. Paste it into WhatsApp.");
-      }
-    } catch (err) {
-      if (err.name !== "AbortError") {
-        await copyText(url, "Share link copied. Paste it into WhatsApp.");
-      }
-    }
-
-  } else if (option === "2") {
+  if (choice.trim() === "1") {
     try {
       if (navigator.share) {
         await navigator.share({
@@ -161,21 +140,28 @@ async function shareEntry(id) {
           text: text
         });
       } else {
-        await copyText(text, "Content copied. Paste it into WhatsApp.");
+        await copyText(
+          text,
+          "Content copied. Paste it into WhatsApp or another app."
+        );
       }
     } catch (err) {
       if (err.name !== "AbortError") {
-        await copyText(text, "Content copied. Paste it into WhatsApp.");
+        await copyText(
+          text,
+          "Content copied. Paste it into WhatsApp or another app."
+        );
       }
     }
-
-  } else if (option === "3") {
-    await copyText(text, "Complete content copied successfully.");
-
+  } else if (choice.trim() === "2") {
+    await copyText(
+      text,
+      "Complete content copied successfully."
+    );
   } else {
-    alert("Please enter 1, 2, or 3.");
+    alert("Please enter 1 or 2.");
   }
- }
+}
 function appUrl(){return window.location.origin+window.location.pathname}
 function encodeSharePayload(payload){const bytes=new TextEncoder().encode(JSON.stringify(payload));let binary="";bytes.forEach(b=>binary+=String.fromCharCode(b));return btoa(binary).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/g,"")}
 function decodeSharePayload(encoded){try{let base=encoded.replace(/-/g,"+").replace(/_/g,"/");while(base.length%4)base+="=";const binary=atob(base),bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));return JSON.parse(new TextDecoder().decode(bytes))}catch{return null}}
