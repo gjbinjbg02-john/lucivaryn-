@@ -1,0 +1,11 @@
+{
+  "name": "LUCIVARYN — Illumination That Transforms",
+  "short_name": "LUCIVARYN",
+  "description": "From Revelation to Transformation.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0c111a",
+  "theme_color": "#10151f",
+  "icons": []
+}
