@@ -117,7 +117,63 @@ function renderCalendar(){const rem=entries.filter(e=>e.reminder).sort((a,b)=>a.
 function renderAll(){document.getElementById("totalStat").textContent=entries.length;document.getElementById("favStat").textContent=entries.filter(e=>e.favorite).length;document.getElementById("stageStat").textContent=STAGES.filter(s=>entries.some(e=>e.stage===s)).length+"/6";const recent=[...entries].sort((a,b)=>(b.updated||"").localeCompare(a.updated||"")).slice(0,4);const el=document.getElementById("recentList");el.innerHTML=recent.length?recent.map(entryCard).join(""):'<div class="empty">Your recent work will appear here after you save an entry.</div>';bindEntryActions(el);if(currentView==="libraryView")renderList();if(currentView==="favoritesView")renderFavorites();if(currentView==="calendarView")renderCalendar()}
 function resetForm(){document.getElementById("entryForm").reset();document.getElementById("entryId").value="";document.getElementById("entryDate").value=dateNow();document.getElementById("editorHeading").textContent="Create an entry";setView("editorView")}
 function editEntry(id){const e=entries.find(x=>x.id===id);if(!e)return;document.getElementById("entryId").value=e.id;document.getElementById("entryTitle").value=e.title;document.getElementById("entryWorkspace").value=e.workspace;document.getElementById("entryStage").value=e.stage;document.getElementById("entryDate").value=e.date||"";document.getElementById("entryVerse").value=e.verse||"";document.getElementById("entryContent").value=e.content;document.getElementById("entryNext").value=e.next||"";document.getElementById("entryReminder").value=e.reminder||"";document.getElementById("editorHeading").textContent="Edit entry";setView("editorView")}
+async function shareEntry(id) {
+  const e = entries.find(x => x.id === id);
+  if (!e) return;
 
+  const text = entryShareText(e);
+  const url = makeShareLink(e);
+
+  const choice = prompt(
+    "SHARE YOUR CONTENT\n\n" +
+    "1. Share as Link\n" +
+    "2. Share Content\n" +
+    "3. Copy Content\n\n" +
+    "Enter 1, 2, or 3:"
+  );
+
+  if (choice === null) return;
+
+  if (choice.trim() === "1") {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: e.title,
+          text: "Shared from LUCIVARYN — Illumination That Transforms.",
+          url: url
+        });
+      } catch (err) {
+        if (err.name !== "AbortError") {
+          await copyText(url, "Share link copied. Paste it into WhatsApp.");
+        }
+      }
+    } else {
+      await copyText(url, "Share link copied. Paste it into WhatsApp.");
+    }
+
+  } else if (choice.trim() === "2") {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: e.title,
+          text: text
+        });
+      } catch (err) {
+        if (err.name !== "AbortError") {
+          await copyText(text, "Content copied. Paste it into WhatsApp.");
+        }
+      }
+    } else {
+      await copyText(text, "Your device does not support direct sharing here. Content copied.");
+    }
+
+  } else if (choice.trim() === "3") {
+    await copyText(text, "Complete content copied successfully.");
+
+  } else {
+    alert("Please enter 1, 2, or 3.");
+  }
+ }
 function appUrl(){return window.location.origin+window.location.pathname}
 function encodeSharePayload(payload){const bytes=new TextEncoder().encode(JSON.stringify(payload));let binary="";bytes.forEach(b=>binary+=String.fromCharCode(b));return btoa(binary).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/g,"")}
 function decodeSharePayload(encoded){try{let base=encoded.replace(/-/g,"+").replace(/_/g,"/");while(base.length%4)base+="=";const binary=atob(base),bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));return JSON.parse(new TextDecoder().decode(bytes))}catch{return null}}
@@ -125,64 +181,7 @@ function makeShareLink(e){const payload={type:"lucivaryn-entry",title:e.title,wo
 function entryShareText(e){return `${e.title}\n${e.workspace} · ${e.stage}${e.verse?"\nScripture: "+e.verse:""}\n\n${e.content}${e.next?"\n\nNext step: "+e.next:""}\n\nShared from LUCIVARYN — Illumination That Transforms.`}
 async function copyText(text,success){try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text)}else{const area=document.createElement("textarea");area.value=text;area.style.position="fixed";area.style.opacity="0";document.body.appendChild(area);area.select();const ok=document.execCommand("copy");area.remove();if(!ok)throw new Error("Copy unavailable")}alert(success)}catch{prompt("Copy the text below:",text)}}
 async function copyEntryText(id){const e=entries.find(x=>x.id===id);if(e)copyText(entryShareText(e),"Content copied. You can paste it into WhatsApp or another app.")}
- async function shareEntry(id) {
-const e = entries.find(x => x.id === id);
-if (!e) return;
 
-const choice = prompt(
-"SHARE YOUR CONTENT\n\n" +
-"1. Share as Link\n" +
-"2. Share Content\n" +
-"3. Copy Content\n\n" +
-"Enter 1, 2, or 3:"
-);
-
-if (!choice) return;
-
-const text = entryShareText(e);
-const url = makeShareLink(e);
-
-if (choice.trim() === "1") {
-const shareText =
-"Shared from LUCIVARYN — Illumination That Transforms.\n" + url;
-
-try {
-  if (navigator.share) {
-    await navigator.share({
-      title: e.title,
-      text: shareText,
-      url: url
-    });
-  } else {
-    await copyText(url, "Share link copied. Paste it into your preferred app.");
-  }
-} catch (err) {
-  if (err && err.name !== "AbortError") {
-    await copyText(url, "Share link copied. Paste it into your preferred app.");
-  }
-}
-
-} else if (choice.trim() === "2") {
-try {
-if (navigator.share) {
-await navigator.share({
-title: e.title,
-text: text
-});
-} else {
-await copyText(text, "Content copied. Paste it into your preferred app.");
-}
-} catch (err) {
-if (err && err.name !== "AbortError") {
-await copyText(text, "Content copied. Paste it into your preferred app.");
-}
-}
-} else if (choice.trim() === "3") {
-await copyText(text, "Complete content copied successfully.");
-} else {
-alert("Please enter 1, 2, or 3.");
-}
- }
 async function renderSharedView(){const encoded=location.hash.match(/(?:^#|&)share=([^&]+)/);if(!encoded)return false;const data=decodeSharePayload(encoded[1]);if(!data||data.type!=="lucivaryn-entry"||!data.title||!data.content){alert("This LUCIVARYN share link is invalid or incomplete.");return false}document.getElementById("sharedTitle").textContent=data.title;document.getElementById("sharedMeta").textContent=[data.workspace,data.stage,data.date?niceDate(data.date):""].filter(Boolean).join(" · ");document.getElementById("sharedVerse").textContent=data.verse?"Scripture: "+data.verse:"";document.getElementById("sharedContent").textContent=data.content;if(data.next){document.getElementById("sharedNext").textContent=data.next;document.getElementById("sharedNextWrap").style.display="block"}else document.getElementById("sharedNextWrap").style.display="none";document.getElementById("shareSharedBtn").onclick=async()=>{const url=location.href,text=entryShareText(data);try{if(navigator.share)await navigator.share({title:data.title,text,url});else await copyText(url,"Share link copied.")}catch(err){if(err&&err.name!=="AbortError")await copyText(url,"Share link copied.")}};document.getElementById("copySharedTextBtn").onclick=()=>copyText(entryShareText(data),"Content copied.");document.getElementById("openAppBtn").onclick=()=>location.href=appUrl();setView("sharedView");return true}
 
 function exportBackup(){const blob=new Blob([JSON.stringify({app:"LUCIVARYN",version:1,exportedAt:new Date().toISOString(),entries},null,2)],{type:"application/json"});const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="lucivaryn-backup-"+dateNow()+".json";a.click();URL.revokeObjectURL(url);const s=document.getElementById("backupStatus");if(s)s.textContent="Backup export started. Keep the downloaded JSON file somewhere safe."}
