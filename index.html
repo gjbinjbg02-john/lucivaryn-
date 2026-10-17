@@ -144,11 +144,11 @@ async function shareEntry(id) {
         });
       } catch (err) {
         if (err.name !== "AbortError") {
-          await copyText(url, "Share link copied. Paste it into WhatsApp.");
+          await copyText(url, ". Paste it into WhatsApp.");
         }
       }
     } else {
-      await copyText(url, "Share link copied. Paste it into WhatsApp.");
+      await copyText(url, . Paste it into WhatsApp.");
     }
 
   } else if (choice.trim() === "2") {
