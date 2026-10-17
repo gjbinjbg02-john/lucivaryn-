@@ -125,49 +125,51 @@ async function shareEntry(id) {
   const url = makeShareLink(e);
 
   const choice = prompt(
-    "SHARE YOUR CONTENT\n\n" +
-    "1. Share as Link\n" +
-    "2. Share Content\n" +
-    "3. Copy Content\n\n" +
-    "Enter 1, 2, or 3:"
+    "LUCIVARYN — SHARE YOUR CONTENT\n\n" +
+    "Enter 1 to Share as Link\n" +
+    "Enter 2 to Share Content\n" +
+    "Enter 3 to Copy Content\n\n" +
+    "Type 1, 2, or 3:"
   );
 
   if (choice === null) return;
 
-  if (choice.trim() === "1") {
-    if (navigator.share) {
-      try {
+  const option = choice.trim();
+
+  if (option === "1") {
+    try {
+      if (navigator.share) {
         await navigator.share({
           title: e.title,
           text: "Shared from LUCIVARYN — Illumination That Transforms.",
           url: url
         });
-      } catch (err) {
-        if (err.name !== "AbortError") {
-          await copyText(url, ". Paste it into WhatsApp.");
-        }
+      } else {
+        await copyText(url, "Share link copied. Paste it into WhatsApp.");
       }
-    } else {
-      await copyText(url, . Paste it into WhatsApp.");
+    } catch (err) {
+      if (err.name !== "AbortError") {
+        await copyText(url, "Share link copied. Paste it into WhatsApp.");
+      }
     }
 
-  } else if (choice.trim() === "2") {
-    if (navigator.share) {
-      try {
+  } else if (option === "2") {
+    try {
+      if (navigator.share) {
         await navigator.share({
           title: e.title,
           text: text
         });
-      } catch (err) {
-        if (err.name !== "AbortError") {
-          await copyText(text, "Content copied. Paste it into WhatsApp.");
-        }
+      } else {
+        await copyText(text, "Content copied. Paste it into WhatsApp.");
       }
-    } else {
-      await copyText(text, "Your device does not support direct sharing here. Content copied.");
+    } catch (err) {
+      if (err.name !== "AbortError") {
+        await copyText(text, "Content copied. Paste it into WhatsApp.");
+      }
     }
 
-  } else if (choice.trim() === "3") {
+  } else if (option === "3") {
     await copyText(text, "Complete content copied successfully.");
 
   } else {
