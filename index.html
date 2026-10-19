@@ -109,8 +109,55 @@ function setView(id){currentView=id;document.querySelectorAll(".view").forEach(v
 function goLibrary(title="",stage="",workspace=""){document.getElementById("listHeading").textContent=title||"Revelation Library";document.getElementById("listSub").textContent=stage?("Entries in "+stage):"Capture what you receive, learn, and want to revisit.";document.getElementById("stageFilter").value=stage;document.getElementById("workspaceFilter").value=workspace;setView("libraryView");renderList()}
 function stageSetup(){document.getElementById("stageCards").innerHTML=STAGES.map((s,i)=>`<button class="stage" data-stage="${s}"><span class="num">STAGE 0${i+1}</span><strong>${s}</strong><span>${STAGE_HINTS[i]}</span></button>`).join("");document.querySelectorAll("[data-stage]").forEach(b=>b.onclick=()=>goLibrary(b.dataset.stage,b.dataset.stage));document.getElementById("workspaceCards").innerHTML=WORKSPACES.map(w=>`<button class="workspace" data-workspace="${esc(w.name)}"><span class="icon">${w.icon}</span><strong>${esc(w.name)}</strong><small>${esc(w.desc)}</small></button>`).join("");document.querySelectorAll("[data-workspace]").forEach(b=>b.onclick=()=>goLibrary(b.dataset.workspace,"",b.dataset.workspace))}
 function selectSetup(){document.getElementById("entryWorkspace").innerHTML=WORKSPACES.map(w=>`<option>${esc(w.name)}</option>`).join("");document.getElementById("workspaceFilter").innerHTML='<option value="">All workspaces</option>'+WORKSPACES.map(w=>`<option>${esc(w.name)}</option>`).join("");const stageOptions=STAGES.map(s=>`<option>${s}</option>`).join("");document.getElementById("entryStage").innerHTML=stageOptions;document.getElementById("stageFilter").innerHTML='<option value="">All stages</option>'+stageOptions}
-function entryCard(e){return `<article class="entry"><div class="entry-title">${esc(e.title)} ${e.favorite?'<span style="color:var(--gold)">★</span>':''}</div><div class="entry-meta">${esc(e.workspace)} · ${esc(e.stage)} · ${niceDate(e.date)}${e.verse?" · "+esc(e.verse):""}</div><div class="entry-preview">${esc(e.content.slice(0,260))}${e.content.length>260?"…":""}</div>${e.next?`<p class="entry-meta">Next step: ${esc(e.next)}</p>`:""}<div class="entry-actions"><button class="btn small" data-edit="${e.id}">Edit</button><button class="btn small" data-share-entry="${e.id}">↗ Share</button><button class="btn small" data-copy-entry="${e.id}">Copy text</button><button class="btn small" data-fav="${e.id}">${e.favorite?"★ Unfavorite":"☆ Favorite"}</button><button class="btn small" data-delete="${e.id}">Delete</button></div></article>`}
-function bindEntryActions(root=document){root.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>editEntry(b.dataset.edit));root.querySelectorAll("[data-share-entry]").forEach(b=>b.onclick=()=>shareEntry(b.dataset.shareEntry));root.querySelectorAll("[data-copy-entry]").forEach(b=>b.onclick=()=>copyEntryText(b.dataset.copyEntry));root.querySelectorAll("[data-fav]").forEach(b=>b.onclick=()=>{const e=entries.find(x=>x.id===b.dataset.fav);if(e){e.favorite=!e.favorite;e.updated=new Date().toISOString();saveEntries()}});root.querySelectorAll("[data-delete]").forEach(b=>b.onclick=()=>{const e=entries.find(x=>x.id===b.dataset.delete);if(e&&confirm(`Delete “${e.title}”? This cannot be undone unless you have a backup.`)){entries=entries.filter(x=>x.id!==e.id);saveEntries()}})}
+function entryCard(e){return `<article class="entry"><div class="entry-title">${esc(e.title)} ${e.favorite?'<span style="color:var(--gold)">★</span>':''}</div><div class="entry-meta">${esc(e.workspace)} · ${esc(e.stage)} · ${niceDate(e.date)}${e.verse?" · "+esc(e.verse):""}</div><div class="entry-preview">${esc(e.content.slice(0,260))}${e.content.length>260?"…":""}</div>${e.next?`<p class="entry-meta">Next step: ${esc(e.next)}</p>`:""}<div class="entry-actions"><button class="btn small" data-edit="${e.id}">Edit</button><button class="btn small" data-share-entry="${e.id}">↗ Share</button><button class="btn small" data-copy-entry="${e.id}">Copy text</button><button class="btn small" data-fav="${e.id}">${e.favorite?"★ Unfavorite":"☆ Favorite"}</button><button class="btn small" data-delete="${e.id}">Delete</button><select class="btn small" data-target-stage="${e.id}" aria-label="Choose destination stage">${STAGES.filter(s=>s!==e.stage).map(s=>`<option value="${s}">Send to ${s}</option>`).join("")}</select><button class="btn small primary" data-transfer="${e.id}">Transfer →</button></div></article>`}
+function bindEntryActions(root=document){
+root.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>editEntry(b.dataset.edit));
+root.querySelectorAll("[data-share-entry]").forEach(b=>b.onclick=()=>shareEntry(b.dataset.shareEntry));
+root.querySelectorAll("[data-copy-entry]").forEach(b=>b.onclick=()=>copyEntryText(b.dataset.copyEntry));
+root.querySelectorAll("[data-fav]").forEach(b=>b.onclick=()=>{const e=entries.find(x=>x.id===b.dataset.fav);if(e){e.favorite=!e.favorite;e.updated=new Date().toISOString();saveEntries()}});
+root.querySelectorAll("[data-delete]").forEach(b=>b.onclick=()=>{const e=entries.find(x=>x.id===b.dataset.delete);if(e&&confirm(`Delete “${e.title}”? This cannot be undone unless you have a backup.`)){entries=entries.filter(x=>x.id!==e.id);saveEntries()}});
+root.querySelectorAll("[data-transfer]").forEach(b=>b.onclick=()=>{
+const selector=b.closest(".entry")?.querySelector("[data-target-stage]");
+if(selector)sendToStage(b.dataset.transfer,selector.value);
+});
+}
+function sendToStage(id, targetStage) {
+  const source = entries.find(e => e.id === id);
+
+  if (!source || !STAGES.includes(targetStage)) return;
+
+  if (source.stage === targetStage) {
+    alert("This entry is already in " + targetStage + ".");
+    return;
+  }
+
+  if (!confirm(
+    `Create a copy of "${source.title}" in ${targetStage}? Your original entry will remain unchanged.`
+  )) return;
+
+  const now = new Date().toISOString();
+
+  const newEntry = {
+    ...source,
+    id: uid(),
+    title: source.title + " — " + targetStage,
+    stage: targetStage,
+    sourceEntryId: source.id,
+    sourceStage: source.stage,
+    favorite: false,
+    created: now,
+    updated: now
+  };
+
+  entries.unshift(newEntry);
+  saveEntries();
+
+  alert(
+    "Entry copied to " + targetStage +
+    ". Your original entry remains preserved."
+  );
+}
+
 function renderList(){const q=document.getElementById("searchInput").value.toLowerCase(),st=document.getElementById("stageFilter").value,ws=document.getElementById("workspaceFilter").value,sort=document.getElementById("sortFilter").value;let list=entries.filter(e=>(!q||[e.title,e.content,e.verse,e.next].join(" ").toLowerCase().includes(q))&&(!st||e.stage===st)&&(!ws||e.workspace===ws));list.sort((a,b)=>sort==="title"?a.title.localeCompare(b.title):sort==="created"?(a.created||"").localeCompare(b.created||""):(b.updated||"").localeCompare(a.updated||""));const el=document.getElementById("entryList");el.innerHTML=list.length?list.map(entryCard).join():'<div class="empty">No entries yet. Create your first entry to begin.</div>';bindEntryActions(el)}
 function renderFavorites(){const list=entries.filter(e=>e.favorite).sort((a,b)=>(b.updated||"").localeCompare(a.updated||""));const el=document.getElementById("favoriteList");el.innerHTML=list.length?list.map(entryCard).join():'<div class="empty">No favorites yet. Favorite an entry to keep it here.</div>';bindEntryActions(el)}
 function renderCalendar(){const rem=entries.filter(e=>e.reminder).sort((a,b)=>a.reminder.localeCompare(b.reminder));const dated=entries.filter(e=>e.date).sort((a,b)=>b.date.localeCompare(a.date));document.getElementById("reminderList").innerHTML=rem.length?rem.map(e=>`<div class="cal-item"><span class="pill">${e.reminder<dateNow()?"PAST DUE":e.reminder===dateNow()?"TODAY":"REMINDER"}</span><strong style="display:block;margin-top:7px">${esc(e.title)}</strong><div class="entry-meta">${niceDate(e.reminder)} · ${esc(e.workspace)}</div><button class="btn small" data-edit="${e.id}">Open entry</button></div>`).join(""):'<div class="empty">No reminders scheduled. Add a reminder date to an entry.</div>';document.getElementById("datedList").innerHTML=dated.length?dated.map(e=>`<div class="cal-item"><strong>${esc(e.title)}</strong><div class="entry-meta">${niceDate(e.date)} · ${esc(e.stage)} · ${esc(e.workspace)}</div><button class="btn small" data-edit="${e.id}">Open entry</button></div>`).join(""):'<div class="empty">No dated entries yet.</div>';bindEntryActions(document.getElementById("reminderList"));bindEntryActions(document.getElementById("datedList"))}
