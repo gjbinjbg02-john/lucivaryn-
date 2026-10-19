@@ -3,13 +3,37 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#ff00ff">
+<meta name="theme-color" content="#24113F">
 <meta name="description" content="LUCIVARYN — Illumination That Transforms.">
 <link rel="manifest" href="manifest.json">
 <title>LUCIVARYN — Illumination That Transforms</title>
 <style>
-:root{--bg:#ff00ff;--panel:#141c29;--panel2:#1a2534;--line:#29374a;--text:#f3f5f8;--muted:#a7b2c2;--gold:#d8b76a;--gold2:#f0d89c;--green:#9ed5b2;--radius:18px}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 70% -10%,#27374a 0%,var(--bg) 50%);color:var(--text);font:15px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+:root{
+  --bg:#24113F;
+  --panel:#171329;
+  --panel2:#21183A;
+  --line:#49365F;
+  --text:#F8F5FC;
+  --muted:#C0B5D0;
+  --gold:#D8B76A;
+  --gold2:#F0D89C;
+  --green:#9ED5B2;
+  --radius:18px;
+}
+*{box-sizing:border-box}body{
+  margin:0;
+  background:
+    radial-gradient(
+      ellipse at 70% -10%,
+      #4A286B 0%,
+      #24113F 45%,
+      #160B27 100%
+    );
+  color:var(--text);
+  font:15px/1.5 system-ui,-apple-system,
+       BlinkMacSystemFont,"Segoe UI",sans-serif;
+  min-height:100vh;
+}
 button,input,textarea,select{font:inherit}button{cursor:pointer}.app{max-width:1180px;margin:auto;padding:18px 16px 100px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0 24px}.brand{display:flex;align-items:center;gap:11px}.mark{width:42px;height:42px;border:1px solid #8e7947;border-radius:50%;display:grid;place-items:center;color:var(--gold2);font-size:20px;background:linear-gradient(145deg,#293343,#10151f)}.brand-name{font-size:19px;letter-spacing:.18em;font-weight:750}.tagline{color:var(--muted);font-size:12px;letter-spacing:.03em}.top-actions{display:flex;gap:8px}.btn{border:1px solid var(--line);border-radius:12px;background:var(--panel2);color:var(--text);padding:10px 13px}.btn.primary{background:var(--gold);color:#15181d;border-color:var(--gold);font-weight:750}.btn.ghost{background:transparent}.btn.small{padding:7px 10px;font-size:13px}.hero{position:relative;overflow:hidden;border:1px solid #4d4634;border-radius:24px;padding:30px 24px;background:linear-gradient(125deg,rgba(216,183,106,.13),transparent 48%),linear-gradient(145deg,#1b2736,#111721 72%);margin-bottom:22px}.hero:after{content:"✧";position:absolute;right:26px;top:-30px;font-size:190px;line-height:1;color:rgba(216,183,106,.08);pointer-events:none}.eyebrow{color:var(--gold2);text-transform:uppercase;letter-spacing:.2em;font-size:11px;font-weight:700}.hero h1{font-size:clamp(30px,6vw,52px);line-height:1.05;letter-spacing:.045em;margin:12px 0}.hero p{color:#c5ced9;margin:0 0 20px}.hero .btn{position:relative;z-index:1}.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:28px 0 12px}.section-head h2{font-size:18px;margin:0}.section-head p{margin:3px 0 0;color:var(--muted);font-size:13px}.stages{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:9px}.stage{min-height:112px;text-align:left;padding:14px 11px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,#182231,#111720);color:var(--text)}.stage .num{font-size:11px;color:var(--gold);letter-spacing:.12em}.stage strong{display:block;margin-top:13px;font-size:12px;letter-spacing:.06em}.stage span:last-child{font-size:11px;color:var(--muted)}.stage.active,.stage:hover{border-color:var(--gold);background:linear-gradient(145deg,#2a2b29,#151b24)}.workspace-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}.workspace{border:1px solid var(--line);border-radius:16px;padding:16px;background:var(--panel);color:var(--text);text-align:left;min-height:110px}.workspace .icon{font-size:21px}.workspace strong{display:block;margin:8px 0 3px}.workspace small{color:var(--muted)}.workspace:hover{border-color:#857347}.content-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(260px,.7fr);gap:14px;margin-top:24px}.card{border:1px solid var(--line);border-radius:var(--radius);background:rgba(20,28,41,.94);padding:18px;min-width:0}.card h3{margin:0 0 12px;font-size:16px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{padding:13px;border-radius:13px;background:#101721;border:1px solid #253245}.stat strong{display:block;font-size:23px;color:var(--gold2)}.stat span{font-size:11px;color:var(--muted)}.entry{padding:13px 0;border-bottom:1px solid #263345}.entry:last-child{border:0}.entry-title{font-weight:700;overflow-wrap:anywhere}.entry-meta{font-size:12px;color:var(--muted);margin:3px 0 8px}.entry-preview{color:#d3d9e2;font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere}.entry-actions{display:flex;gap:7px;margin-top:9px;flex-wrap:wrap}.pill{display:inline-block;border:1px solid #48556a;color:#c4d0df;border-radius:999px;padding:3px 8px;font-size:10px;letter-spacing:.05em}.muted{color:var(--muted)}.empty{color:var(--muted);padding:20px 0;text-align:center}.view{display:none}.view.active{display:block}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.toolbar input,.toolbar select{flex:1;min-width:150px}.field{display:flex;flex-direction:column;gap:6px;margin:12px 0}.field label{font-size:12px;color:#c4cedb}.field input,.field textarea,.field select,.toolbar input,.toolbar select{background:#0d131d;color:var(--text);border:1px solid #34445a;border-radius:11px;padding:11px;width:100%}.field textarea{min-height:145px;resize:vertical}.form-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.notice{border:1px solid #675b3c;background:#282519;color:#eadcb7;padding:12px;border-radius:12px;font-size:12px;margin-top:15px}.calendar-list{display:grid;gap:9px}.cal-item{border:1px solid var(--line);border-radius:12px;padding:12px;background:#101721}.footer{margin-top:34px;text-align:center;color:#7f8b9b;font-size:11px}.mobile-nav{display:none}.file-input{display:none}.share-card{max-width:760px;margin:22px auto}.share-content{white-space:pre-wrap;overflow-wrap:anywhere;color:#d3d9e2}.share-warning{font-size:12px;color:var(--muted);margin-top:12px}.share-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
 @media(max-width:800px){.stages{grid-template-columns:repeat(3,minmax(0,1fr))}.workspace-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.content-grid{grid-template-columns:1fr}.hero{padding:24px 18px}.top{align-items:flex-start}.top-actions .btn{padding:8px 9px;font-size:12px}}
 @media(max-width:480px){.app{padding:10px 12px 95px}.brand-name{font-size:16px}.tagline{font-size:10px}.mark{width:36px;height:36px}.top-actions{flex-direction:column}.stages{gap:7px}.stage{min-height:92px;padding:10px 8px}.stage strong{font-size:11px}.stage span:last-child{font-size:10px}.workspace{padding:12px;min-height:100px}.stats{gap:6px}.stat{padding:10px}.stat strong{font-size:20px}.mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:5;gap:3px;justify-content:space-around;padding:8px 4px calc(8px + env(safe-area-inset-bottom));background:rgba(10,15,23,.96);border-top:1px solid var(--line);backdrop-filter:blur(14px)}.mobile-nav button{background:transparent;border:0;color:var(--muted);font-size:10px;padding:6px 5px}.mobile-nav button.active{color:var(--gold2)}}
@@ -100,16 +124,109 @@ const WORKSPACES = [
 const KEY="lucivaryn.entries.v1";
 let entries=loadEntries(), currentView="dashboardView";
 function loadEntries(){try{return JSON.parse(localStorage.getItem(KEY)||"[]")}catch{return []}}
-function saveEntries(){localStorage.setItem(KEY,JSON.stringify(entries));renderAll()}
+function saveEntries() {
+  try {
+    localStorage.setItem(KEY, JSON.stringify(entries));
+    renderAll();
+    return true;
+  } catch (error) {
+    console.error("LUCIVARYN save error:", error);
+
+    alert(
+      "Your entries could not be saved. " +
+      "Your browser storage may be full or unavailable."
+    );
+
+    return false;
+  }
+}
 function uid(){return "lv_"+Date.now().toString(36)+"_"+Math.random().toString(36).slice(2,8)}
 function esc(s=""){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function dateNow(){return new Date().toISOString().slice(0,10)}
+function dateNow() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
 function niceDate(s){if(!s)return "No date";const d=new Date(s+"T12:00:00");return isNaN(d) ? s : d.toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"})}
 function setView(id){currentView=id;document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id===id));document.querySelectorAll("[data-nav]").forEach(b=>b.classList.toggle("active",b.dataset.nav===id));if(id==="libraryView")renderList();if(id==="favoritesView")renderFavorites();if(id==="calendarView")renderCalendar();window.scrollTo({top:0,behavior:"smooth"})}
 function goLibrary(title="",stage="",workspace=""){document.getElementById("listHeading").textContent=title||"Revelation Library";document.getElementById("listSub").textContent=stage?("Entries in "+stage):"Capture what you receive, learn, and want to revisit.";document.getElementById("stageFilter").value=stage;document.getElementById("workspaceFilter").value=workspace;setView("libraryView");renderList()}
 function stageSetup(){document.getElementById("stageCards").innerHTML=STAGES.map((s,i)=>`<button class="stage" data-stage="${s}"><span class="num">STAGE 0${i+1}</span><strong>${s}</strong><span>${STAGE_HINTS[i]}</span></button>`).join("");document.querySelectorAll("[data-stage]").forEach(b=>b.onclick=()=>goLibrary(b.dataset.stage,b.dataset.stage));document.getElementById("workspaceCards").innerHTML=WORKSPACES.map(w=>`<button class="workspace" data-workspace="${esc(w.name)}"><span class="icon">${w.icon}</span><strong>${esc(w.name)}</strong><small>${esc(w.desc)}</small></button>`).join("");document.querySelectorAll("[data-workspace]").forEach(b=>b.onclick=()=>goLibrary(b.dataset.workspace,"",b.dataset.workspace))}
 function selectSetup(){document.getElementById("entryWorkspace").innerHTML=WORKSPACES.map(w=>`<option>${esc(w.name)}</option>`).join("");document.getElementById("workspaceFilter").innerHTML='<option value="">All workspaces</option>'+WORKSPACES.map(w=>`<option>${esc(w.name)}</option>`).join("");const stageOptions=STAGES.map(s=>`<option>${s}</option>`).join("");document.getElementById("entryStage").innerHTML=stageOptions;document.getElementById("stageFilter").innerHTML='<option value="">All stages</option>'+stageOptions}
-function entryCard(e){return `<article class="entry"><div class="entry-title">${esc(e.title)} ${e.favorite?'<span style="color:var(--gold)">★</span>':''}</div><div class="entry-meta">${esc(e.workspace)} · ${esc(e.stage)} · ${niceDate(e.date)}${e.verse?" · "+esc(e.verse):""}</div><div class="entry-preview">${esc(e.content.slice(0,260))}${e.content.length>260?"…":""}</div>${e.next?`<p class="entry-meta">Next step: ${esc(e.next)}</p>`:""}<div class="entry-actions"><button class="btn small" data-edit="${e.id}">Edit</button><button class="btn small" data-share-entry="${e.id}">↗ Share</button><button class="btn small" data-copy-entry="${e.id}">Copy text</button><button class="btn small" data-fav="${e.id}">${e.favorite?"★ Unfavorite":"☆ Favorite"}</button><button class="btn small" data-delete="${e.id}">Delete</button><select class="btn small" data-target-stage="${e.id}" aria-label="Choose destination stage">${STAGES.filter(s=>s!==e.stage).map(s=>`<option value="${s}">Send to ${s}</option>`).join("")}</select><button class="btn small primary" data-transfer="${e.id}">Transfer →</button></div></article>`}
+function entryCard(e) {
+  const title = e.title || "Untitled entry";
+  const workspace = e.workspace || "Revelation Library";
+  const stage = e.stage || "RECEIVE";
+  const content = e.content || "";
+  const date = e.date || "";
+
+  return `
+    <article class="entry">
+      <div class="entry-title">
+        ${esc(title)}
+        ${e.favorite
+          ? '<span style="color:var(--gold)">★</span>'
+          : ""}
+      </div>
+
+      <div class="entry-meta">
+        ${esc(workspace)} · ${esc(stage)} · ${niceDate(date)}
+        ${e.verse ? " · " + esc(e.verse) : ""}
+      </div>
+
+      <div class="entry-preview">
+        ${esc(content.slice(0, 260))}
+        ${content.length > 260 ? "…" : ""}
+      </div>
+
+      ${e.next
+        ? `<p class="entry-meta">Next step: ${esc(e.next)}</p>`
+        : ""}
+
+      <div class="entry-actions">
+        <button class="btn small" data-edit="${esc(e.id)}">
+          Edit
+        </button>
+
+        <button class="btn small" data-share-entry="${esc(e.id)}">
+          ↗ Share
+        </button>
+
+        <button class="btn small" data-copy-entry="${esc(e.id)}">
+          Copy text
+        </button>
+
+        <button class="btn small" data-fav="${esc(e.id)}">
+          ${e.favorite ? "★ Unfavorite" : "☆ Favorite"}
+        </button>
+
+        <button class="btn small" data-delete="${esc(e.id)}">
+          Delete
+        </button>
+
+        <select
+          class="btn small"
+          data-target-stage="${esc(e.id)}"
+          aria-label="Choose destination stage"
+        >
+          ${STAGES
+            .filter(s => s !== stage)
+            .map(s => `
+              <option value="${s}">
+                Send to ${s}
+              </option>
+            `).join("")}
+        </select>
+
+        <button class="btn small primary" data-transfer="${esc(e.id)}">
+          Transfer →
+        </button>
+      </div>
+    </article>
+  `;
+}
 function bindEntryActions(root=document){
 root.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>editEntry(b.dataset.edit));
 root.querySelectorAll("[data-share-entry]").forEach(b=>b.onclick=()=>shareEntry(b.dataset.shareEntry));
@@ -121,26 +238,138 @@ const selector=b.closest(".entry")?.querySelector("[data-target-stage]");
 if(selector)sendToStage(b.dataset.transfer,selector.value);
 });
 }
+function transformForStage(source, targetStage) {
+  const content = source.content || "";
+  const next = source.next || "";
+
+  switch (targetStage) {
+    case "RECEIVE":
+      return {
+        title: source.title,
+        content:
+          "RECEIVED INSIGHT\n\n" +
+          content +
+          "\n\nOriginal next step:\n" +
+          (next || "Not yet defined.") +
+          "\n\nPurpose: Preserve the insight faithfully.",
+        next: next
+      };
+
+    case "UNDERSTAND":
+      return {
+        title: source.title + " — Understanding",
+        content:
+          "ORIGINAL INSIGHT\n\n" +
+          content +
+          "\n\nQUESTIONS FOR UNDERSTANDING\n\n" +
+          "1. What is the central message?\n" +
+          "2. What does the Scripture or context establish?\n" +
+          "3. What does this mean in practical terms?\n" +
+          "4. What needs further study or clarification?\n\n" +
+          "Use these questions to develop a clear explanation. " +
+          "The questions are prompts, not verified conclusions.",
+        next:
+          "Study the relevant Scripture and write a clear explanation."
+      };
+
+    case "DEVELOP":
+      return {
+        title: source.title + " — Development",
+        content:
+          "FOUNDATION\n\n" +
+          content +
+          "\n\nDEVELOPMENT WORKSPACE\n\n" +
+          "Central message:\n[Write the main truth]\n\n" +
+          "Supporting Scriptures:\n[Add references and context]\n\n" +
+          "Explanation:\n[Develop the message]\n\n" +
+          "Practical examples:\n[Add examples]\n\n" +
+          "Conclusion:\n[Summarise the teaching]",
+        next:
+          "Develop the insight into a structured teaching or study."
+      };
+
+    case "MULTIPLY":
+      return {
+        title: source.title + " — Sharing",
+        content:
+          "SOURCE INSIGHT\n\n" +
+          content +
+          "\n\nSHARING WORKSPACE\n\n" +
+          "Audience:\n[Who needs this message?]\n\n" +
+          "Main takeaway:\n[What should they remember?]\n\n" +
+          "Format:\n[Teaching, article, message, or social post]\n\n" +
+          "Call to action:\n[What should the audience do?]",
+        next:
+          "Prepare the message for the intended audience."
+      };
+
+    case "ALIGN":
+      return {
+        title: source.title + " — Alignment",
+        content:
+          "INSIGHT TO APPLY\n\n" +
+          content +
+          "\n\nPERSONAL ALIGNMENT\n\n" +
+          "What needs to change?\n[Write your reflection]\n\n" +
+          "What needs to be corrected?\n[Identify the issue]\n\n" +
+          "What habit or priority should change?\n[Write your plan]\n\n" +
+          "How will progress be reviewed?\n[Set a review method]",
+        next:
+          "Identify and implement a practical adjustment."
+      };
+
+    case "RELEASE":
+      return {
+        title: source.title + " — Action",
+        content:
+          "INSIGHT FOR ACTION\n\n" +
+          content +
+          "\n\nACTION PLAN\n\n" +
+          "1. Action:\n[What will you do?]\n\n" +
+          "2. Deadline:\n[When will you do it?]\n\n" +
+          "3. Resources:\n[What do you need?]\n\n" +
+          "4. Evidence of progress:\n[How will you assess completion?]",
+        next:
+          "Complete the action and record the outcome."
+      };
+
+    default:
+      return {
+        title: source.title,
+        content: content,
+        next: next
+      };
+  }
+}
+
 function sendToStage(id, targetStage) {
   const source = entries.find(e => e.id === id);
 
-  if (!source || !STAGES.includes(targetStage)) return;
+  if (!source || !STAGES.includes(targetStage)) {
+    alert("Unable to transfer this entry.");
+    return;
+  }
 
   if (source.stage === targetStage) {
     alert("This entry is already in " + targetStage + ".");
     return;
   }
 
-  if (!confirm(
-    `Create a copy of "${source.title}" in ${targetStage}? Your original entry will remain unchanged.`
-  )) return;
+  const confirmed = confirm(
+    `Send "${source.title}" from ${source.stage} to ${targetStage}?\n\n` +
+    "A new working copy will be created for the destination stage. " +
+    "Your original entry will remain unchanged."
+  );
 
+  if (!confirmed) return;
+
+  const transformed = transformForStage(source, targetStage);
   const now = new Date().toISOString();
 
   const newEntry = {
     ...source,
+    ...transformed,
     id: uid(),
-    title: source.title + " — " + targetStage,
     stage: targetStage,
     sourceEntryId: source.id,
     sourceStage: source.stage,
@@ -150,63 +379,84 @@ function sendToStage(id, targetStage) {
   };
 
   entries.unshift(newEntry);
-  saveEntries();
+
+  const saved = saveEntries();
+
+  if (!saved) {
+    entries = entries.filter(e => e.id !== newEntry.id);
+    renderAll();
+
+    alert(
+      "The transfer could not be saved. " +
+      "Your original entry remains unchanged."
+    );
+
+    return;
+  }
 
   alert(
-    "Entry copied to " + targetStage +
-    ". Your original entry remains preserved."
+    "Transfer successful!\n\n" +
+    "Your entry has been sent to " + targetStage + ".\n" +
+    "A new working copy has been created. " +
+    "Your original entry remains preserved."
   );
-}
 
-function renderList(){const q=document.getElementById("searchInput").value.toLowerCase(),st=document.getElementById("stageFilter").value,ws=document.getElementById("workspaceFilter").value,sort=document.getElementById("sortFilter").value;let list=entries.filter(e=>(!q||[e.title,e.content,e.verse,e.next].join(" ").toLowerCase().includes(q))&&(!st||e.stage===st)&&(!ws||e.workspace===ws));list.sort((a,b)=>sort==="title"?a.title.localeCompare(b.title):sort==="created"?(a.created||"").localeCompare(b.created||""):(b.updated||"").localeCompare(a.updated||""));const el=document.getElementById("entryList");el.innerHTML=list.length?list.map(entryCard).join():'<div class="empty">No entries yet. Create your first entry to begin.</div>';bindEntryActions(el)}
-function renderFavorites(){const list=entries.filter(e=>e.favorite).sort((a,b)=>(b.updated||"").localeCompare(a.updated||""));const el=document.getElementById("favoriteList");el.innerHTML=list.length?list.map(entryCard).join():'<div class="empty">No favorites yet. Favorite an entry to keep it here.</div>';bindEntryActions(el)}
+  renderAll();
+}
+function renderList(){const q=document.getElementById("searchInput").value.toLowerCase(),st=document.getElementById("stageFilter").value,ws=document.getElementById("workspaceFilter").value,sort=document.getElementById("sortFilter").value;let list=entries.filter(e=>(!q||[e.title,e.content,e.verse,e.next].join(" ").toLowerCase().includes(q))&&(!st||e.stage===st)&&(!ws||e.workspace===ws));list.sort((a,b)=>sort==="title"?a.title.localeCompare(b.title):sort==="created"?(a.created||"").localeCompare(b.created||""):(b.updated||"").localeCompare(a.updated||""));const el=document.getElementById("entryList");el.innerHTML = list.length
+  ? list.map(entryCard).join("")
+  : '<div class="empty">No favorites yet. Favorite an entry to keep it here.</div>';bindEntryActions(el)}
+function renderFavorites(){const list=entries.filter(e=>e.favorite).sort((a,b)=>(b.updated||"").localeCompare(a.updated||""));const el=document.getElementById("favoriteList");el.innerHTML = list.length
+  ? list.map(entryCard).join("")
+  : '<div class="empty">No favorites yet. Favorite an entry to keep it here.</div>';bindEntryActions(el)}
 function renderCalendar(){const rem=entries.filter(e=>e.reminder).sort((a,b)=>a.reminder.localeCompare(b.reminder));const dated=entries.filter(e=>e.date).sort((a,b)=>b.date.localeCompare(a.date));document.getElementById("reminderList").innerHTML=rem.length?rem.map(e=>`<div class="cal-item"><span class="pill">${e.reminder<dateNow()?"PAST DUE":e.reminder===dateNow()?"TODAY":"REMINDER"}</span><strong style="display:block;margin-top:7px">${esc(e.title)}</strong><div class="entry-meta">${niceDate(e.reminder)} · ${esc(e.workspace)}</div><button class="btn small" data-edit="${e.id}">Open entry</button></div>`).join(""):'<div class="empty">No reminders scheduled. Add a reminder date to an entry.</div>';document.getElementById("datedList").innerHTML=dated.length?dated.map(e=>`<div class="cal-item"><strong>${esc(e.title)}</strong><div class="entry-meta">${niceDate(e.date)} · ${esc(e.stage)} · ${esc(e.workspace)}</div><button class="btn small" data-edit="${e.id}">Open entry</button></div>`).join(""):'<div class="empty">No dated entries yet.</div>';bindEntryActions(document.getElementById("reminderList"));bindEntryActions(document.getElementById("datedList"))}
 function renderAll(){document.getElementById("totalStat").textContent=entries.length;document.getElementById("favStat").textContent=entries.filter(e=>e.favorite).length;document.getElementById("stageStat").textContent=STAGES.filter(s=>entries.some(e=>e.stage===s)).length+"/6";const recent=[...entries].sort((a,b)=>(b.updated||"").localeCompare(a.updated||"")).slice(0,4);const el=document.getElementById("recentList");el.innerHTML=recent.length?recent.map(entryCard).join(""):'<div class="empty">Your recent work will appear here after you save an entry.</div>';bindEntryActions(el);if(currentView==="libraryView")renderList();if(currentView==="favoritesView")renderFavorites();if(currentView==="calendarView")renderCalendar()}
 function resetForm(){document.getElementById("entryForm").reset();document.getElementById("entryId").value="";document.getElementById("entryDate").value=dateNow();document.getElementById("editorHeading").textContent="Create an entry";setView("editorView")}
 function editEntry(id){const e=entries.find(x=>x.id===id);if(!e)return;document.getElementById("entryId").value=e.id;document.getElementById("entryTitle").value=e.title;document.getElementById("entryWorkspace").value=e.workspace;document.getElementById("entryStage").value=e.stage;document.getElementById("entryDate").value=e.date||"";document.getElementById("entryVerse").value=e.verse||"";document.getElementById("entryContent").value=e.content;document.getElementById("entryNext").value=e.next||"";document.getElementById("entryReminder").value=e.reminder||"";document.getElementById("editorHeading").textContent="Edit entry";setView("editorView")}
 async function shareEntry(id) {
-  const e = entries.find(x => x.id === id);
-  if (!e) return;
+  const entry = entries.find(e => e.id === id);
 
-  const text = entryShareText(e);
+  if (!entry) {
+    alert("This entry could not be found.");
+    return;
+  }
+
+  const shareUrl = makeShareLink(entry);
+  const shareText = entryShareText(entry);
+
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: entry.title,
+        text: shareText,
+        url: shareUrl
+      });
+
+      return;
+    } catch (error) {
+      if (error.name === "AbortError") {
+        return;
+      }
+    }
+  }
 
   const choice = prompt(
     "LUCIVARYN — SHARE YOUR CONTENT\n\n" +
-    "1. Share Content\n" +
-    "2. Copy Content\n\n" +
+    "1. Copy share link\n" +
+    "2. Copy complete content\n\n" +
     "Enter 1 or 2:"
   );
 
-  if (choice === null) return;
-
-  if (choice.trim() === "1") {
-    try {
-      if (navigator.share) {
-        await navigator.share({
-          title: e.title,
-          text: text
-        });
-      } else {
-        await copyText(
-          text,
-          "Content copied. Paste it into WhatsApp or another app."
-        );
-      }
-    } catch (err) {
-      if (err.name !== "AbortError") {
-        await copyText(
-          text,
-          "Content copied. Paste it into WhatsApp or another app."
-        );
-      }
-    }
-  } else if (choice.trim() === "2") {
+  if (choice === "1") {
     await copyText(
-      text,
+      shareUrl,
+      "LUCIVARYN share link copied. Paste it into WhatsApp or another app."
+    );
+  } else if (choice === "2") {
+    await copyText(
+      shareText,
       "Complete content copied successfully."
     );
-  } else {
-    alert("Please enter 1 or 2.");
   }
 }
 function appUrl(){return window.location.origin+window.location.pathname}
@@ -217,10 +467,24 @@ function entryShareText(e){return `${e.title}\n${e.workspace} · ${e.stage}${e.v
 async function copyText(text,success){try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text)}else{const area=document.createElement("textarea");area.value=text;area.style.position="fixed";area.style.opacity="0";document.body.appendChild(area);area.select();const ok=document.execCommand("copy");area.remove();if(!ok)throw new Error("Copy unavailable")}alert(success)}catch{prompt("Copy the text below:",text)}}
 async function copyEntryText(id){const e=entries.find(x=>x.id===id);if(e)copyText(entryShareText(e),"Content copied. You can paste it into WhatsApp or another app.")}
 
-async function renderSharedView(){const encoded=location.hash.match(/(?:^#|&)share=([^&]+)/);if(!encoded)return false;const data=decodeSharePayload(encoded[1]);if(!data||data.type!=="lucivaryn-entry"||!data.title||!data.content){alert("This LUCIVARYN share link is invalid or incomplete.");return false}document.getElementById("sharedTitle").textContent=data.title;document.getElementById("sharedMeta").textContent=[data.workspace,data.stage,data.date?niceDate(data.date):""].filter(Boolean).join(" · ");document.getElementById("sharedVerse").textContent=data.verse?"Scripture: "+data.verse:"";document.getElementById("sharedContent").textContent=data.content;if(data.next){document.getElementById("sharedNext").textContent=data.next;document.getElementById("sharedNextWrap").style.display="block"}else document.getElementById("sharedNextWrap").style.display="none";document.getElementById("shareSharedBtn").onclick=async()=>{const url=location.href,text=entryShareText(data);try{if(navigator.share)await navigator.share({title:data.title,text,url});else await copyText(url,"Share link copied.")}catch(err){if(err&&err.name!=="AbortError")await copyText(url,"Share link copied.")}};document.getElementById("copySharedTextBtn").onclick=()=>copyText(entryShareText(data),"Content copied.");document.getElementById("openAppBtn").onclick=()=>location.href=appUrl();setView("sharedView");return true}
+async function renderSharedView(){const encoded=location.hash.match(/(?:^#|&)share=([^&]+)/);if(!encoded)return false;const data=decodeSharePayload(encoded[1]);if(!data||data.type!=="lucivaryn-entry"||!data.title||!data.content){alert("This LUCIVARYN share link is invalid or incomplete.");return false}document.getElementById("sharedTitle").textContent=data.title;document.getElementById("sharedMeta").textContent=[data.workspace,data.stage,data.date?niceDate(data.date):""].filter(Boolean).join(" · ");document.getElementById("sharedVerse").textContent=data.verse?"Scripture: "+data.verse:"";document.getElementById("sharedContent").textContent=data.content;if(data.next){document.getElementById("sharedNext").textContent=data.next;document.getElementById("sharedNextWrap").style.display="block"}else document.getElementById("sharedNextWrap").style.display="none";document.getElementById("shareSharedBtn").onclick=async()=>{const url=location.href,text=entryShareText(data);try{if(navigator.share)await navigator.share({title:data.title,text,url});else await copyText(url,"Share link copied.")}catch(err){if(err&&err.name!=="AbortError")await copyText(url,"Share link copied.")}};document.getElementById("copySharedTextBtn").onclick=()=>copyText(entryShareText(data),"Content copied.");document.getElementById("openAppBtn").onclick = () => {
+  history.replaceState(null, "", appUrl());
+  setView("dashboardView");
+};setView("sharedView");return true}
 
 function exportBackup(){const blob=new Blob([JSON.stringify({app:"LUCIVARYN",version:1,exportedAt:new Date().toISOString(),entries},null,2)],{type:"application/json"});const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="lucivaryn-backup-"+dateNow()+".json";a.click();URL.revokeObjectURL(url);const s=document.getElementById("backupStatus");if(s)s.textContent="Backup export started. Keep the downloaded JSON file somewhere safe."}
-function importBackup(file){const reader=new FileReader();reader.onload=()=>{try{const data=JSON.parse(reader.result);const imported=Array.isArray(data)?data:data.entries;if(!Array.isArray(imported))throw new Error("This file does not contain a LUCIVARYN entries list.");if(!confirm(`Import ${imported.length} entries? Existing entries with matching IDs will be replaced; other entries will be kept.`))return;const map=new Map(entries.map(e=>[e.id,e]));imported.forEach(raw=>{if(!raw.title||!raw.content) return;const e={id:raw.id||uid(),title:String(raw.title),content:String(raw.content),workspace:WORKSPACES.some(w=>w.name===raw.workspace)?raw.workspace:"Revelation Library",stage:STAGES.includes(raw.stage)?raw.stage:"RECEIVE",date:raw.date||"",verse:raw.verse||"",next:raw.next||"",reminder:raw.reminder||"",favorite:!!raw.favorite,created:raw.created||new Date().toISOString(),updated:new Date().toISOString()};map.set(e.id,e)});entries=[...map.values()];saveEntries();alert("Backup imported successfully.")}catch(err){alert("Could not import backup: "+err.message)}};reader.readAsText(file)}
+function importBackup(file){const reader=new FileReader();reader.onload=()=>{try{const data=JSON.parse(reader.result);const imported=Array.isArray(data)?data:data.entries;if(!Array.isArray(imported))throw new Error("This file does not contain a LUCIVARYN entries list.");if(!confirm(`Import ${imported.length} entries? Existing entries with matching IDs will be replaced; other entries will be kept.`))return;const map=new Map(entries.map(e=>[e.id,e]));imported.forEach(raw => {
+  if (
+    !raw ||
+    typeof raw !== "object" ||
+    typeof raw.title !== "string" ||
+    typeof raw.content !== "string" ||
+    !raw.title.trim()
+  ) {
+    return;
+  }
+
+  const e = {id:raw.id||uid(),title:String(raw.title),content:String(raw.content),workspace:WORKSPACES.some(w=>w.name===raw.workspace)?raw.workspace:"Revelation Library",stage:STAGES.includes(raw.stage)?raw.stage:"RECEIVE",date:raw.date||"",verse:raw.verse||"",next:raw.next||"",reminder:raw.reminder||"",favorite:!!raw.favorite,created:raw.created||new Date().toISOString(),updated:new Date().toISOString()};map.set(e.id,e)});entries=[...map.values()];saveEntries();alert("Backup imported successfully.")}catch(err){alert("Could not import backup: "+err.message)}};reader.readAsText(file)}
 document.getElementById("entryForm").addEventListener("submit",ev=>{ev.preventDefault();const id=document.getElementById("entryId").value,old=entries.find(e=>e.id===id),now=new Date().toISOString();const e={id:id||uid(),title:document.getElementById("entryTitle").value.trim(),workspace:document.getElementById("entryWorkspace").value,stage:document.getElementById("entryStage").value,date:document.getElementById("entryDate").value,verse:document.getElementById("entryVerse").value.trim(),content:document.getElementById("entryContent").value.trim(),next:document.getElementById("entryNext").value.trim(),reminder:document.getElementById("entryReminder").value,favorite:old?old.favorite:false,created:old?old.created:now,updated:now};if(old)entries=entries.map(x=>x.id===id?e:x);else entries.unshift(e);saveEntries();setView("libraryView")});
 document.getElementById("newEntryBtn").onclick=resetForm;document.getElementById("calendarNewBtn").onclick=resetForm;document.getElementById("beginBtn").onclick=()=>goLibrary("Begin Your Journey");document.getElementById("cancelEditBtn").onclick=()=>setView("libraryView");
 ["searchInput","stageFilter","workspaceFilter","sortFilter"].forEach(id=>document.getElementById(id).addEventListener(id==="searchInput"?"input":"change",renderList));
