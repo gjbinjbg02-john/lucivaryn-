@@ -147,7 +147,6 @@ function dateNow() {
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, "0");
   const day = String(now.getDate()).padStart(2, "0");
-
   return `${year}-${month}-${day}`;
 }
 function niceDate(s){if(!s)return "No date";const d=new Date(s+"T12:00:00");return isNaN(d) ? s : d.toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"})}
@@ -161,7 +160,6 @@ function entryCard(e) {
   const stage = e.stage || "RECEIVE";
   const content = e.content || "";
   const date = e.date || "";
-
   return `
     <article class="entry">
       <div class="entry-title">
@@ -170,42 +168,33 @@ function entryCard(e) {
           ? '<span style="color:var(--gold)">★</span>'
           : ""}
       </div>
-
       <div class="entry-meta">
         ${esc(workspace)} · ${esc(stage)} · ${niceDate(date)}
         ${e.verse ? " · " + esc(e.verse) : ""}
       </div>
-
       <div class="entry-preview">
         ${esc(content.slice(0, 260))}
         ${content.length > 260 ? "…" : ""}
       </div>
-
       ${e.next
         ? `<p class="entry-meta">Next step: ${esc(e.next)}</p>`
         : ""}
-
       <div class="entry-actions">
         <button class="btn small" data-edit="${esc(e.id)}">
           Edit
         </button>
-
         <button class="btn small" data-share-entry="${esc(e.id)}">
           ↗ Share
         </button>
-
         <button class="btn small" data-copy-entry="${esc(e.id)}">
           Copy text
         </button>
-
         <button class="btn small" data-fav="${esc(e.id)}">
           ${e.favorite ? "★ Unfavorite" : "☆ Favorite"}
         </button>
-
         <button class="btn small" data-delete="${esc(e.id)}">
           Delete
         </button>
-
         <select
           class="btn small"
           data-target-stage="${esc(e.id)}"
@@ -219,8 +208,7 @@ function entryCard(e) {
               </option>
             `).join("")}
         </select>
-
-        <button class="btn small primary" data-transfer="${esc(e.id)}">
+       <button class="btn small primary" data-transfer="${esc(e.id)}">
           Transfer →
         </button>
       </div>
@@ -241,7 +229,6 @@ if(selector)sendToStage(b.dataset.transfer,selector.value);
 function transformForStage(source, targetStage) {
   const content = source.content || "";
   const next = source.next || "";
-
   switch (targetStage) {
     case "RECEIVE":
       return {
@@ -254,7 +241,6 @@ function transformForStage(source, targetStage) {
           "\n\nPurpose: Preserve the insight faithfully.",
         next: next
       };
-
     case "UNDERSTAND":
       return {
         title: source.title + " — Understanding",
@@ -271,7 +257,6 @@ function transformForStage(source, targetStage) {
         next:
           "Study the relevant Scripture and write a clear explanation."
       };
-
     case "DEVELOP":
       return {
         title: source.title + " — Development",
@@ -287,7 +272,6 @@ function transformForStage(source, targetStage) {
         next:
           "Develop the insight into a structured teaching or study."
       };
-
     case "MULTIPLY":
       return {
         title: source.title + " — Sharing",
@@ -302,7 +286,6 @@ function transformForStage(source, targetStage) {
         next:
           "Prepare the message for the intended audience."
       };
-
     case "ALIGN":
       return {
         title: source.title + " — Alignment",
@@ -317,7 +300,6 @@ function transformForStage(source, targetStage) {
         next:
           "Identify and implement a practical adjustment."
       };
-
     case "RELEASE":
       return {
         title: source.title + " — Action",
@@ -332,7 +314,6 @@ function transformForStage(source, targetStage) {
         next:
           "Complete the action and record the outcome."
       };
-
     default:
       return {
         title: source.title,
@@ -341,7 +322,6 @@ function transformForStage(source, targetStage) {
       };
   }
 }
-
 function sendToStage(id, targetStage) {
   const source = entries.find(e => e.id === id);
 
@@ -349,23 +329,18 @@ function sendToStage(id, targetStage) {
     alert("Unable to transfer this entry.");
     return;
   }
-
   if (source.stage === targetStage) {
     alert("This entry is already in " + targetStage + ".");
     return;
   }
-
   const confirmed = confirm(
     `Send "${source.title}" from ${source.stage} to ${targetStage}?\n\n` +
     "A new working copy will be created for the destination stage. " +
     "Your original entry will remain unchanged."
   );
-
   if (!confirmed) return;
-
   const transformed = transformForStage(source, targetStage);
   const now = new Date().toISOString();
-
   const newEntry = {
     ...source,
     ...transformed,
@@ -377,30 +352,23 @@ function sendToStage(id, targetStage) {
     created: now,
     updated: now
   };
-
   entries.unshift(newEntry);
-
   const saved = saveEntries();
-
   if (!saved) {
     entries = entries.filter(e => e.id !== newEntry.id);
     renderAll();
-
     alert(
       "The transfer could not be saved. " +
       "Your original entry remains unchanged."
     );
-
     return;
   }
-
   alert(
     "Transfer successful!\n\n" +
     "Your entry has been sent to " + targetStage + ".\n" +
     "A new working copy has been created. " +
     "Your original entry remains preserved."
   );
-
   renderAll();
 }
 function renderList(){const q=document.getElementById("searchInput").value.toLowerCase(),st=document.getElementById("stageFilter").value,ws=document.getElementById("workspaceFilter").value,sort=document.getElementById("sortFilter").value;let list=entries.filter(e=>(!q||[e.title,e.content,e.verse,e.next].join(" ").toLowerCase().includes(q))&&(!st||e.stage===st)&&(!ws||e.workspace===ws));list.sort((a,b)=>sort==="title"?a.title.localeCompare(b.title):sort==="created"?(a.created||"").localeCompare(b.created||""):(b.updated||"").localeCompare(a.updated||""));const el=document.getElementById("entryList");el.innerHTML = list.length
@@ -415,15 +383,12 @@ function resetForm(){document.getElementById("entryForm").reset();document.getEl
 function editEntry(id){const e=entries.find(x=>x.id===id);if(!e)return;document.getElementById("entryId").value=e.id;document.getElementById("entryTitle").value=e.title;document.getElementById("entryWorkspace").value=e.workspace;document.getElementById("entryStage").value=e.stage;document.getElementById("entryDate").value=e.date||"";document.getElementById("entryVerse").value=e.verse||"";document.getElementById("entryContent").value=e.content;document.getElementById("entryNext").value=e.next||"";document.getElementById("entryReminder").value=e.reminder||"";document.getElementById("editorHeading").textContent="Edit entry";setView("editorView")}
 async function shareEntry(id) {
   const entry = entries.find(e => e.id === id);
-
   if (!entry) {
     alert("This entry could not be found.");
     return;
   }
-
   const shareUrl = makeShareLink(entry);
   const shareText = entryShareText(entry);
-
   const choice = prompt(
     "LUCIVARYN — SHARE YOUR CONTENT\n\n" +
     "1. Share content directly\n" +
@@ -431,7 +396,6 @@ async function shareEntry(id) {
     "3. Copy complete content\n\n" +
     "Enter 1, 2, or 3:"
   );
-
   if (choice === "1") {
     if (navigator.share) {
       try {
@@ -470,12 +434,10 @@ function makeShareLink(e){const payload={type:"lucivaryn-entry",title:e.title,wo
 function entryShareText(e){return `${e.title}\n${e.workspace} · ${e.stage}${e.verse?"\nScripture: "+e.verse:""}\n\n${e.content}${e.next?"\n\nNext step: "+e.next:""}\n\nShared from LUCIVARYN — Illumination That Transforms.`}
 async function copyText(text,success){try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text)}else{const area=document.createElement("textarea");area.value=text;area.style.position="fixed";area.style.opacity="0";document.body.appendChild(area);area.select();const ok=document.execCommand("copy");area.remove();if(!ok)throw new Error("Copy unavailable")}alert(success)}catch{prompt("Copy the text below:",text)}}
 async function copyEntryText(id){const e=entries.find(x=>x.id===id);if(e)copyText(entryShareText(e),"Content copied. You can paste it into WhatsApp or another app.")}
-
 async function renderSharedView(){const encoded=location.hash.match(/(?:^#|&)share=([^&]+)/);if(!encoded)return false;const data=decodeSharePayload(encoded[1]);if(!data||data.type!=="lucivaryn-entry"||!data.title||!data.content){alert("This LUCIVARYN share link is invalid or incomplete.");return false}document.getElementById("sharedTitle").textContent=data.title;document.getElementById("sharedMeta").textContent=[data.workspace,data.stage,data.date?niceDate(data.date):""].filter(Boolean).join(" · ");document.getElementById("sharedVerse").textContent=data.verse?"Scripture: "+data.verse:"";document.getElementById("sharedContent").textContent=data.content;if(data.next){document.getElementById("sharedNext").textContent=data.next;document.getElementById("sharedNextWrap").style.display="block"}else document.getElementById("sharedNextWrap").style.display="none";document.getElementById("shareSharedBtn").onclick=async()=>{const url=location.href,text=entryShareText(data);try{if(navigator.share)await navigator.share({title:data.title,text,url});else await copyText(url,"Share link copied.")}catch(err){if(err&&err.name!=="AbortError")await copyText(url,"Share link copied.")}};document.getElementById("copySharedTextBtn").onclick=()=>copyText(entryShareText(data),"Content copied.");document.getElementById("openAppBtn").onclick = () => {
   history.replaceState(null, "", appUrl());
   setView("dashboardView");
 };setView("sharedView");return true}
-
 function exportBackup(){const blob=new Blob([JSON.stringify({app:"LUCIVARYN",version:1,exportedAt:new Date().toISOString(),entries},null,2)],{type:"application/json"});const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="lucivaryn-backup-"+dateNow()+".json";a.click();URL.revokeObjectURL(url);const s=document.getElementById("backupStatus");if(s)s.textContent="Backup export started. Keep the downloaded JSON file somewhere safe."}
 function importBackup(file){const reader=new FileReader();reader.onload=()=>{try{const data=JSON.parse(reader.result);const imported=Array.isArray(data)?data:data.entries;if(!Array.isArray(imported))throw new Error("This file does not contain a LUCIVARYN entries list.");if(!confirm(`Import ${imported.length} entries? Existing entries with matching IDs will be replaced; other entries will be kept.`))return;const map=new Map(entries.map(e=>[e.id,e]));imported.forEach(raw => {
   if (
@@ -487,7 +449,6 @@ function importBackup(file){const reader=new FileReader();reader.onload=()=>{try
   ) {
     return;
   }
-
   const e = {id:raw.id||uid(),title:String(raw.title),content:String(raw.content),workspace:WORKSPACES.some(w=>w.name===raw.workspace)?raw.workspace:"Revelation Library",stage:STAGES.includes(raw.stage)?raw.stage:"RECEIVE",date:raw.date||"",verse:raw.verse||"",next:raw.next||"",reminder:raw.reminder||"",favorite:!!raw.favorite,created:raw.created||new Date().toISOString(),updated:new Date().toISOString()};map.set(e.id,e)});entries=[...map.values()];saveEntries();alert("Backup imported successfully.")}catch(err){alert("Could not import backup: "+err.message)}};reader.readAsText(file)}
 document.getElementById("entryForm").addEventListener("submit",ev=>{ev.preventDefault();const id=document.getElementById("entryId").value,old=entries.find(e=>e.id===id),now=new Date().toISOString();const e={id:id||uid(),title:document.getElementById("entryTitle").value.trim(),workspace:document.getElementById("entryWorkspace").value,stage:document.getElementById("entryStage").value,date:document.getElementById("entryDate").value,verse:document.getElementById("entryVerse").value.trim(),content:document.getElementById("entryContent").value.trim(),next:document.getElementById("entryNext").value.trim(),reminder:document.getElementById("entryReminder").value,favorite:old?old.favorite:false,created:old?old.created:now,updated:now};if(old)entries=entries.map(x=>x.id===id?e:x);else entries.unshift(e);saveEntries();setView("libraryView")});
 document.getElementById("newEntryBtn").onclick=resetForm;document.getElementById("calendarNewBtn").onclick=resetForm;document.getElementById("beginBtn").onclick=()=>goLibrary("Begin Your Journey");document.getElementById("cancelEditBtn").onclick=()=>setView("libraryView");
