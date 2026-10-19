@@ -414,7 +414,6 @@ function renderAll(){document.getElementById("totalStat").textContent=entries.le
 function resetForm(){document.getElementById("entryForm").reset();document.getElementById("entryId").value="";document.getElementById("entryDate").value=dateNow();document.getElementById("editorHeading").textContent="Create an entry";setView("editorView")}
 function editEntry(id){const e=entries.find(x=>x.id===id);if(!e)return;document.getElementById("entryId").value=e.id;document.getElementById("entryTitle").value=e.title;document.getElementById("entryWorkspace").value=e.workspace;document.getElementById("entryStage").value=e.stage;document.getElementById("entryDate").value=e.date||"";document.getElementById("entryVerse").value=e.verse||"";document.getElementById("entryContent").value=e.content;document.getElementById("entryNext").value=e.next||"";document.getElementById("entryReminder").value=e.reminder||"";document.getElementById("editorHeading").textContent="Edit entry";setView("editorView")}
 async function shareEntry(id) {
-async function shareEntry(id) {
   const entry = entries.find(e => e.id === id);
 
   if (!entry) {
