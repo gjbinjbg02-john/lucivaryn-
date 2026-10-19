@@ -414,6 +414,7 @@ function renderAll(){document.getElementById("totalStat").textContent=entries.le
 function resetForm(){document.getElementById("entryForm").reset();document.getElementById("entryId").value="";document.getElementById("entryDate").value=dateNow();document.getElementById("editorHeading").textContent="Create an entry";setView("editorView")}
 function editEntry(id){const e=entries.find(x=>x.id===id);if(!e)return;document.getElementById("entryId").value=e.id;document.getElementById("entryTitle").value=e.title;document.getElementById("entryWorkspace").value=e.workspace;document.getElementById("entryStage").value=e.stage;document.getElementById("entryDate").value=e.date||"";document.getElementById("entryVerse").value=e.verse||"";document.getElementById("entryContent").value=e.content;document.getElementById("entryNext").value=e.next||"";document.getElementById("entryReminder").value=e.reminder||"";document.getElementById("editorHeading").textContent="Edit entry";setView("editorView")}
 async function shareEntry(id) {
+async function shareEntry(id) {
   const entry = entries.find(e => e.id === id);
 
   if (!entry) {
@@ -424,38 +425,42 @@ async function shareEntry(id) {
   const shareUrl = makeShareLink(entry);
   const shareText = entryShareText(entry);
 
-  if (navigator.share) {
-    try {
-      await navigator.share({
-        title: entry.title,
-        text: shareText,
-        url: shareUrl
-      });
-
-      return;
-    } catch (error) {
-      if (error.name === "AbortError") {
-        return;
-      }
-    }
-  }
-
   const choice = prompt(
     "LUCIVARYN — SHARE YOUR CONTENT\n\n" +
-    "1. Copy share link\n" +
-    "2. Copy complete content\n\n" +
-    "Enter 1 or 2:"
+    "1. Share content directly\n" +
+    "2. Copy share link\n" +
+    "3. Copy complete content\n\n" +
+    "Enter 1, 2, or 3:"
   );
 
   if (choice === "1") {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: entry.title,
+          text: shareText,
+          url: shareUrl
+        });
+      } catch (error) {
+        if (error.name !== "AbortError") {
+          alert("Sharing was unavailable. You can copy the link instead.");
+        }
+      }
+    } else {
+      await copyText(
+        shareUrl,
+        "Share link copied. Paste it into WhatsApp or another app."
+      );
+    }
+  } else if (choice === "2") {
     await copyText(
       shareUrl,
       "LUCIVARYN share link copied. Paste it into WhatsApp or another app."
     );
-  } else if (choice === "2") {
+  } else if (choice === "3") {
     await copyText(
       shareText,
-      "Complete content copied successfully."
+      "Complete content copied. You can paste it into WhatsApp or another app."
     );
   }
 }
