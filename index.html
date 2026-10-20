@@ -400,10 +400,9 @@ async function shareEntry(id) {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: entry.title,
-          text: shareText,
-          url: shareUrl
-        });
+  title: entry.title,
+  text: shareText
+});
       } catch (error) {
         if (error.name !== "AbortError") {
           alert("Sharing was unavailable. You can copy the link instead.");
