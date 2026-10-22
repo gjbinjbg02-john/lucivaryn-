@@ -15,7 +15,10 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}.app{max-width:1
 @media(max-width:480px){.app{padding:10px 12px 95px}.brand-name{font-size:16px}.tagline{font-size:10px}.mark{width:36px;height:36px}.top-actions{flex-direction:column}.stages{gap:7px}.stage{min-height:92px;padding:10px 8px}.stage strong{font-size:11px}.stage span:last-child{font-size:10px}.workspace{padding:12px;min-height:100px}.stats{gap:6px}.stat{padding:10px}.stat strong{font-size:20px}.mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:5;gap:3px;justify-content:space-around;padding:8px 4px calc(8px + env(safe-area-inset-bottom));background:#160D24F5;border-top:1px solid var(--line);backdrop-filter:blur(14px)}.mobile-nav button{background:transparent;border:0;color:var(--muted);font-size:10px;padding:6px 5px}.mobile-nav button.active{color:var(--gold2)}}
 </style>
 </head>
-<body>
+ <body>
+<div id="lucivarynSplash" aria-label="LUCIVARYN loading screen">
+  <img src="./splash.png" alt="LUCIVARYN — Illumination That Transforms">
+</div>
 <div class="app">
 <header class="top">
  <div class="brand"><div class="mark" aria-hidden="true">✧</div><div><div class="brand-name">LUCIVARYN</div><div class="tagline">Illumination That Transforms.</div></div></div>
@@ -170,6 +173,34 @@ document.getElementById("newEntryBtn").onclick=resetForm;document.getElementById
 ["searchInput","stageFilter","workspaceFilter","sortFilter"].forEach(id=>document.getElementById(id).addEventListener(id==="searchInput"?"input":"change",renderList));
 document.getElementById("exportBtn").onclick=exportBackup;document.getElementById("settingsExport").onclick=exportBackup;document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();document.getElementById("settingsImport").onclick=()=>document.getElementById("importFile").click();document.getElementById("importFile").onchange=e=>{if(e.target.files[0])importBackup(e.target.files[0]);e.target.value=""};document.querySelectorAll("[data-nav]").forEach(b=>b.onclick=()=>setView(b.dataset.nav));
 stageSetup();selectSetup();renderAll();renderSharedView();
+ // LUCIVARYN splash-screen startup
+(function () {
+  const splash = document.getElementById("lucivarynSplash");
+  if (!splash) return;
+
+  const hideSplash = () => {
+    setTimeout(() => {
+      splash.classList.add("hidden");
+
+      setTimeout(() => {
+        splash.remove();
+      }, 700);
+    }, 1800);
+  };
+
+  const image = splash.querySelector("img");
+
+  if (image && image.complete) {
+    hideSplash();
+  } else if (image) {
+    image.addEventListener("load", hideSplash, { once: true });
+    image.addEventListener("error", hideSplash, { once: true });
+
+    setTimeout(hideSplash, 4000);
+  } else {
+    hideSplash();
+  }
+})();
 if("serviceWorker"in navigator&&location.protocol.startsWith("http"))window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
 </script>
 </body>
