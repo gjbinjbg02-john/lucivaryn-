@@ -10,7 +10,6 @@
 <style>
 :root{--bg:#24113F;--bg-deep:#160B27;--panel:#1B1230;--panel2:#2B1D43;--line:#59436F;--text:#F8F5FC;--muted:#C0B5D0;--gold:#D8B76A;--gold2:#F0D89C;--green:#9ED5B2;--radius:18px}
  *{box-sizing:border-box}
-
 #lucivarynSplash{
   position:fixed;
   inset:0;
@@ -23,14 +22,12 @@
   visibility:visible;
   transition:opacity .6s ease,visibility .6s ease;
 }
-
 #lucivarynSplash img{
   width:100%;
   height:100%;
   object-fit:cover;
   display:block;
 }
-
 #lucivarynSplash.hide{
   opacity:0;
   visibility:hidden;
@@ -43,7 +40,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}.app{max-width:1
   flex-shrink: 0;
   border-radius: 12px;
   filter: drop-shadow(0 0 10px #D8B76A35);}.brand-name{font-size:19px;letter-spacing:.18em;font-weight:800}.tagline{color:var(--muted);font-size:12px;letter-spacing:.03em}.top-actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid var(--line);border-radius:12px;background:var(--panel2);color:var(--text);padding:10px 13px}.btn.primary{background:var(--gold);color:#24152F;border-color:var(--gold);font-weight:800}.btn.ghost{background:transparent}.btn.small{padding:7px 10px;font-size:13px}.btn:hover{border-color:var(--gold2);filter:brightness(1.06)}.hero{position:relative;overflow:hidden;border:1px solid #806B43;border-radius:24px;padding:30px 24px;background:linear-gradient(125deg,#D8B76A1B,transparent 48%),linear-gradient(145deg,#38224F,#1C1230 72%);margin-bottom:22px}.hero:after{content:"✧";position:absolute;right:26px;top:-30px;font-size:190px;line-height:1;color:#D8B76A14;pointer-events:none}.eyebrow{color:var(--gold2);text-transform:uppercase;letter-spacing:.2em;font-size:11px;font-weight:750}.hero h1{font-size:clamp(30px,6vw,52px);line-height:1.05;letter-spacing:.045em;margin:12px 0}.hero p{color:#D8CFE4;margin:0 0 20px}.hero .btn{position:relative;z-index:1}.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:28px 0 12px}.section-head h2{font-size:18px;margin:0}.section-head p{margin:3px 0 0;color:var(--muted);font-size:13px}.stages{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:9px}.stage{min-height:112px;text-align:left;padding:14px 11px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,#302040,#1B122A);color:var(--text)}.stage .num{font-size:11px;color:v
-@media(max-width:800px){.stages{grid-teplate-columns:repeat(3,minmax(0,1fr))}.workspace-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.content-grid{grid-template-columns:1fr}.hero{padding:24px 18px}.top{align-items:flex-start}.top-actions .btn{padding:8px 9px;font-size:12px}}
+  @media(max-width:800px){.stages{grid-template-columns:repeat(3,minmax(0,1fr))}.workspace-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.content-grid{grid-template-columns:1fr}.hero{padding:24px 18px}.top{align-items:flex-start}.top-actions .btn{padding:8px 9px;font-size:12px}}
 @media(max-width:480px){.app{padding:10px 12px 95px}.brand-name{font-size:16px}.tagline{font-size:10px}.brand-logo {
   width: 42px;
   height: 42px;
@@ -151,15 +148,12 @@ function makeShareLink(e){const payload={type:"lucivaryn-entry",title:e.title,wo
 async function copyText(text,success){try{if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(text);else{const area=document.createElement("textarea");area.value=text;area.style.position="fixed";area.style.opacity="0";document.body.appendChild(area);area.select();const ok=document.execCommand("copy");area.remove();if(!ok)throw Error("Copy unavailable")}alert(success)}catch{prompt("Copy the text below:",text)}}
 async function shareEntry(id) {
   const e = entries.find(x => x.id === id);
-
   if (!e) {
     alert("This entry could not be found.");
     return;
   }
-
   const url = makeShareLink(e);
   const txt = entryShareText(e);
-
   const choice = prompt(
     "LUCIVARYN — SHARE YOUR CONTENT\n\n" +
     "1. Share Revelation (content only)\n" +
@@ -168,7 +162,6 @@ async function shareEntry(id) {
     "4. Share to WhatsApp (content only)\n\n" +
     "Enter 1, 2, 3, or 4:"
   );
-
   if (choice === "1") {
     if (navigator.share) {
       try {
@@ -184,25 +177,21 @@ async function shareEntry(id) {
     } else {
       await copyText(txt, "Content copied.");
     }
-
   } else if (choice === "2") {
     await copyText(
       url,
       "Share link copied. Paste it into WhatsApp or another app."
     );
-
   } else if (choice === "3") {
     await copyText(
       txt,
       "Complete content copied without the link."
     );
-
   } else if (choice === "4") {
     window.open(
       "https://wa.me/?text=" + encodeURIComponent(txt),
       "_blank"
     );
-
   } else if (choice !== null) {
     alert("Please enter a valid option: 1, 2, 3, or 4.");
   }
@@ -218,7 +207,6 @@ document.getElementById("newEntryBtn").onclick=resetForm;document.getElementById
 ["searchInput","stageFilter","workspaceFilter","sortFilter"].forEach(id=>document.getElementById(id).addEventListener(id==="searchInput"?"input":"change",renderList));
 document.getElementById("exportBtn").onclick=exportBackup;document.getElementById("settingsExport").onclick=exportBackup;document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();document.getElementById("settingsImport").onclick=()=>document.getElementById("importFile").click();document.getElementById("importFile").onchange=e=>{if(e.target.files[0])importBackup(e.target.files[0]);e.target.value=""};document.querySelectorAll("[data-nav]").forEach(b=>b.onclick=()=>setView(b.dataset.nav));
 const lucivarynSplash = document.getElementById("lucivarynSplash");
-
 if (lucivarynSplash) {
   window.addEventListener("load", () => {
     setTimeout(() => {
@@ -232,25 +220,20 @@ if (lucivarynSplash) {
 (function () {
   const splash = document.getElementById("lucivarynSplash");
   if (!splash) return;
-
   const hideSplash = () => {
     setTimeout(() => {
       splash.classList.add("hidden");
-
-      setTimeout(() => {
+     setTimeout(() => {
         splash.remove();
       }, 700);
     }, 1800);
   };
-
   const image = splash.querySelector("img");
-
   if (image && image.complete) {
     hideSplash();
   } else if (image) {
     image.addEventListener("load", hideSplash, { once: true });
     image.addEventListener("error", hideSplash, { once: true });
-
     setTimeout(hideSplash, 4000);
   } else {
     hideSplash();
