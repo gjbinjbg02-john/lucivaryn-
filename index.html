@@ -217,7 +217,17 @@ document.getElementById("entryForm").addEventListener("submit",ev=>{ev.preventDe
 document.getElementById("newEntryBtn").onclick=resetForm;document.getElementById("calendarNewBtn").onclick=resetForm;document.getElementById("beginBtn").onclick=()=>goLibrary("Begin Your Journey");document.getElementById("cancelEditBtn").onclick=()=>setView("libraryView");document.getElementById("sevenDayBack").onclick=()=>setView("dashboardView");document.getElementById("prepareSeriesBtn").onclick=prepareSeries;
 ["searchInput","stageFilter","workspaceFilter","sortFilter"].forEach(id=>document.getElementById(id).addEventListener(id==="searchInput"?"input":"change",renderList));
 document.getElementById("exportBtn").onclick=exportBackup;document.getElementById("settingsExport").onclick=exportBackup;document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();document.getElementById("settingsImport").onclick=()=>document.getElementById("importFile").click();document.getElementById("importFile").onchange=e=>{if(e.target.files[0])importBackup(e.target.files[0]);e.target.value=""};document.querySelectorAll("[data-nav]").forEach(b=>b.onclick=()=>setView(b.dataset.nav));
-stageSetup();selectSetup();renderAll();renderSharedView();
+const lucivarynSplash = document.getElementById("lucivarynSplash");
+
+if (lucivarynSplash) {
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      lucivarynSplash.classList.add("hide");
+      setTimeout(() => lucivarynSplash.remove(), 700);
+    }, 1800);
+  });
+  }
+  stageSetup();selectSetup();renderAll();renderSharedView();
  // LUCIVARYN splash-screen startup
 (function () {
   const splash = document.getElementById("lucivarynSplash");
