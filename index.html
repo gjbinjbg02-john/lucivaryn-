@@ -9,10 +9,45 @@
 <title>LUCIVARYN — Illumination That Transforms</title>
 <style>
 :root{--bg:#24113F;--bg-deep:#160B27;--panel:#1B1230;--panel2:#2B1D43;--line:#59436F;--text:#F8F5FC;--muted:#C0B5D0;--gold:#D8B76A;--gold2:#F0D89C;--green:#9ED5B2;--radius:18px}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 70% -10%,#4A286B 0%,var(--bg) 45%,var(--bg-deep) 100%);color:var(--text);font:15px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
-button,input,textarea,select{font:inherit}button{cursor:pointer}.app{max-width:1180px;margin:auto;padding:18px 16px 100px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0 24px}.brand{display:flex;align-items:center;gap:11px}.mark{width:44px;height:44px;border:1px solid #A88D4D;border-radius:50%;display:grid;place-items:center;color:var(--gold2);font-size:24px;background:radial-gradient(circle,#4B2A66,#211334);box-shadow:0 0 22px #D8B76A20}.brand-name{font-size:19px;letter-spacing:.18em;font-weight:800}.tagline{color:var(--muted);font-size:12px;letter-spacing:.03em}.top-actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid var(--line);border-radius:12px;background:var(--panel2);color:var(--text);padding:10px 13px}.btn.primary{background:var(--gold);color:#24152F;border-color:var(--gold);font-weight:800}.btn.ghost{background:transparent}.btn.small{padding:7px 10px;font-size:13px}.btn:hover{border-color:var(--gold2);filter:brightness(1.06)}.hero{position:relative;overflow:hidden;border:1px solid #806B43;border-radius:24px;padding:30px 24px;background:linear-gradient(125deg,#D8B76A1B,transparent 48%),linear-gradient(145deg,#38224F,#1C1230 72%);margin-bottom:22px}.hero:after{content:"✧";position:absolute;right:26px;top:-30px;font-size:190px;line-height:1;color:#D8B76A14;pointer-events:none}.eyebrow{color:var(--gold2);text-transform:uppercase;letter-spacing:.2em;font-size:11px;font-weight:750}.hero h1{font-size:clamp(30px,6vw,52px);line-height:1.05;letter-spacing:.045em;margin:12px 0}.hero p{color:#D8CFE4;margin:0 0 20px}.hero .btn{position:relative;z-index:1}.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:28px 0 12px}.section-head h2{font-size:18px;margin:0}.section-head p{margin:3px 0 0;color:var(--muted);font-size:13px}.stages{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:9px}.stage{min-height:112px;text-align:left;padding:14px 11px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,#302040,#1B122A);color:var(--text)}.stage .num{font-size:11px;color:var(--gold);letter-spacing:.12em}.stage strong{display:block;margin-top:13px;font-size:12px;letter-spacing:.06em}.stage span:last-child{font-size:11px;color:var(--muted)}.stage.active,.stage:hover{border-color:var(--gold);background:linear-gradient(145deg,#493154,#241632)}.workspace-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}.workspace{border:1px solid var(--line);border-radius:16px;padding:16px;background:var(--panel);color:var(--text);text-align:left;min-height:110px}.workspace .icon{font-size:21px;color:var(--gold2)}.workspace strong{display:block;margin:8px 0 3px}.workspace small{color:var(--muted)}.workspace:hover{border-color:var(--gold)}.content-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(260px,.7fr);gap:14px;margin-top:24px}.card{border:1px solid var(--line);border-radius:var(--radius);background:#1A112BEF;padding:18px;min-width:0;margin-bottom:14px}.card h3{margin:0 0 12px;font-size:16px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{padding:13px;border-radius:13px;background:#251735;border:1px solid #49365F}.stat strong{display:block;font-size:23px;color:var(--gold2)}.stat span{font-size:11px;color:var(--muted)}.entry{padding:13px 0;border-bottom:1px solid #49365F}.entry:last-child{border:0}.entry-title{font-weight:750;overflow-wrap:anywhere}.entry-meta{font-size:12px;color:var(--muted);margin:3px 0 8px}.entry-preview{color:#E0D8E9;font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere}.entry-actions{display:flex;gap:7px;margin-top:9px;flex-wrap:wrap;align-items:center}.pill{display:inline-block;border:1px solid #806B43;color:var(--gold2);border-radius:999px;padding:3px 8px;font-size:10px;letter-spacing:.05em}.muted{color:var(--muted)}.empty{color:var(--muted);padding:20px 0;text-align:center}.view{display:none}.view.active{display:block}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.toolbar input,.toolbar select{flex:1;min-width:150px}.field{display:flex;flex-direction:column;gap:6px;margin:12px 0}.field label{font-size:12px;color:#D4C9E0}.field input,.field textarea,.field select,.toolbar input,.toolbar select{background:#170E25;color:var(--text);border:1px solid #59436F;border-radius:11px;padding:11px;width:100%}.field textarea{min-height:145px;resize:vertical}.form-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.notice{border:1px solid #806B43;background:#30251B;color:#F0D89C;padding:12px;border-radius:12px;font-size:12px;margin-top:15px}.calendar-list{display:grid;gap:9px}.cal-item{border:1px solid var(--line);border-radius:12px;padding:12px;background:#251735}.footer{margin-top:34px;text-align:center;color:#B3A5C5;font-size:11px}.mobile-nav{display:none}.file-input{display:none}.share-card{max-width:760px;margin:22px auto}.share-content{white-space:pre-wrap;overflow-wrap:anywhere;color:#E0D8E9}.share-warning{font-size:12px;color:var(--muted);margin-top:12px}.share-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.stage-note{font-size:12px;color:var(--muted);margin-top:10px}
-@media(max-width:800px){.stages{grid-template-columns:repeat(3,minmax(0,1fr))}.workspace-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.content-grid{grid-template-columns:1fr}.hero{padding:24px 18px}.top{align-items:flex-start}.top-actions .btn{padding:8px 9px;font-size:12px}}
-@media(max-width:480px){.app{padding:10px 12px 95px}.brand-name{font-size:16px}.tagline{font-size:10px}.mark{width:36px;height:36px}.top-actions{flex-direction:column}.stages{gap:7px}.stage{min-height:92px;padding:10px 8px}.stage strong{font-size:11px}.stage span:last-child{font-size:10px}.workspace{padding:12px;min-height:100px}.stats{gap:6px}.stat{padding:10px}.stat strong{font-size:20px}.mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:5;gap:3px;justify-content:space-around;padding:8px 4px calc(8px + env(safe-area-inset-bottom));background:#160D24F5;border-top:1px solid var(--line);backdrop-filter:blur(14px)}.mobile-nav button{background:transparent;border:0;color:var(--muted);font-size:10px;padding:6px 5px}.mobile-nav button.active{color:var(--gold2)}}
+ *{box-sizing:border-box}
+
+#lucivarynSplash{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:#24113F;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:1;
+  visibility:visible;
+  transition:opacity .6s ease,visibility .6s ease;
+}
+
+#lucivarynSplash img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+#lucivarynSplash.hide{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+button,input,textarea,select{font:inherit}button{cursor:pointer}.app{max-width:1180px;margin:auto;padding:18px 16px 100px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0 24px}.brand{display:flex;align-items:center;gap:11px}.brand-logo {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  flex-shrink: 0;
+  border-radius: 12px;
+  filter: drop-shadow(0 0 10px #D8B76A35);}.brand-name{font-size:19px;letter-spacing:.18em;font-weight:800}.tagline{color:var(--muted);font-size:12px;letter-spacing:.03em}.top-actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid var(--line);border-radius:12px;background:var(--panel2);color:var(--text);padding:10px 13px}.btn.primary{background:var(--gold);color:#24152F;border-color:var(--gold);font-weight:800}.btn.ghost{background:transparent}.btn.small{padding:7px 10px;font-size:13px}.btn:hover{border-color:var(--gold2);filter:brightness(1.06)}.hero{position:relative;overflow:hidden;border:1px solid #806B43;border-radius:24px;padding:30px 24px;background:linear-gradient(125deg,#D8B76A1B,transparent 48%),linear-gradient(145deg,#38224F,#1C1230 72%);margin-bottom:22px}.hero:after{content:"✧";position:absolute;right:26px;top:-30px;font-size:190px;line-height:1;color:#D8B76A14;pointer-events:none}.eyebrow{color:var(--gold2);text-transform:uppercase;letter-spacing:.2em;font-size:11px;font-weight:750}.hero h1{font-size:clamp(30px,6vw,52px);line-height:1.05;letter-spacing:.045em;margin:12px 0}.hero p{color:#D8CFE4;margin:0 0 20px}.hero .btn{position:relative;z-index:1}.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:28px 0 12px}.section-head h2{font-size:18px;margin:0}.section-head p{margin:3px 0 0;color:var(--muted);font-size:13px}.stages{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:9px}.stage{min-height:112px;text-align:left;padding:14px 11px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,#302040,#1B122A);color:var(--text)}.stage .num{font-size:11px;color:v
+@media(max-width:800px){.stages{grid-teplate-columns:repeat(3,minmax(0,1fr))}.workspace-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.content-grid{grid-template-columns:1fr}.hero{padding:24px 18px}.top{align-items:flex-start}.top-actions .btn{padding:8px 9px;font-size:12px}}
+@media(max-width:480px){.app{padding:10px 12px 95px}.brand-name{font-size:16px}.tagline{font-size:10px}.brand-logo {
+  width: 42px;
+  height: 42px;
+}.top-actions{flex-direction:column}.stages{gap:7px}.stage{min-height:92px;padding:10px 8px}.stage strong{font-size:11px}.stage span:last-child{font-size:10px}.workspace{padding:12px;min-height:100px}.stats{gap:6px}.stat{padding:10px}.stat strong{font-size:20px}.mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:5;gap:3px;justify-content:space-around;padding:8px 4px calc(8px + env(safe-area-inset-bottom));background:#160D24F5;border-top:1px solid var(--line);backdrop-filter:blur(14px)}.mobile-nav button{background:transparent;border:0;color:var(--muted);font-size:10px;padding:6px 5px}.mobile-nav button.active{color:var(--gold2)}}
 </style>
 </head>
  <body>
@@ -21,7 +56,17 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}.app{max-width:1
 </div>
 <div class="app">
 <header class="top">
- <div class="brand"><div class="mark" aria-hidden="true">✧</div><div><div class="brand-name">LUCIVARYN</div><div class="tagline">Illumination That Transforms.</div></div></div>
+ <div class="brand">
+  <img
+    class="brand-logo"
+    src="./icon-192.png"
+    alt="LUCIVARYN logo"
+  >
+  <div>
+    <div class="brand-name">LUCIVARYN</div>
+    <div class="tagline">Illumination That Transforms.</div>
+  </div>
+ </div>
  <div class="top-actions"><button class="btn ghost small" id="exportBtn">Export backup</button><button class="btn ghost small" id="importBtn">Import backup</button><input class="file-input" id="importFile" type="file" accept="application/json,.json"></div>
 </header>
 <main>
