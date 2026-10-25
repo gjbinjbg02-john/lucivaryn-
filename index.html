@@ -360,8 +360,7 @@ async function shareEntry(id) {
   const e = entries.find(x => x.id === id);
   if (!e) {
     alert("This entry could not be found.");
-    return;
-  }
+    return;}
   const url = makeShareLink(e);
   const txt = entryShareText(e);
   const choice = prompt(
@@ -370,8 +369,7 @@ async function shareEntry(id) {
     "2. Copy Share Link\n" +
     "3. Copy Full Content\n" +
     "4. Share to WhatsApp (content only)\n\n" +
-    "Enter 1, 2, 3, or 4:"
-  );
+    "Enter 1, 2, 3, or 4:");
   if (choice === "1") {
     if (navigator.share) {
       try {
@@ -382,12 +380,7 @@ async function shareEntry(id) {
       } catch (err) {
         if (err.name !== "AbortError") {
           await copyText(txt, "Content copied.");
-        }
-      }
-    } else {
-      await copyText(txt, "Content copied.");
-    }
-  } else if (choice === "2") {
+        }}} else {await copyText(txt, "Content copied.");}} else if (choice === "2") {
     await copyText(
       url,
       "Share link copied. Paste it into WhatsApp or another app."
@@ -404,8 +397,7 @@ async function shareEntry(id) {
     );
   } else if (choice !== null) {
     alert("Please enter a valid option: 1, 2, 3, or 4.");
-  }
-}
+  }}
  async function copyEntryText(id){const e=entries.find(x=>x.id===id);if(e)await copyText(entryShareText(e),"Content copied. You can paste it into WhatsApp or another app.")}
 async function renderSharedView(){const m=location.hash.match(/(?:^#|&)share=([^&]+)/);if(!m)return false;const d=decodeSharePayload(m[1]);if(!d||d.type!=="lucivaryn-entry"||!d.title||typeof d.content!=="string"){alert("This LUCIVARYN share link is invalid or incomplete.");return false}document.getElementById("sharedTitle").textContent=d.title;document.getElementById("sharedMeta").textContent=[d.workspace,d.stage,d.date?niceDate(d.date):""].filter(Boolean).join(" · ");document.getElementById("sharedVerse").textContent=d.verse?"Scripture: "+d.verse:"";document.getElementById("sharedContent").textContent=d.content;document.getElementById("sharedNext").textContent=d.next||"";document.getElementById("sharedNextWrap").style.display=d.next?"block":"none";document.getElementById("shareSharedBtn").onclick=async()=>{const txt=entryShareText(d),url=location.href;try{if(navigator.share)await navigator.share({title:d.title,text:txt,url});else window.open("https://wa.me/?text="+encodeURIComponent(txt+"\n\n"+url),"_blank","noopener")}catch(err){if(err.name!=="AbortError")await copyText(url,"Share link copied.")}};document.getElementById("copySharedTextBtn").onclick=()=>copyText(entryShareText(d),"Content copied.");document.getElementById("openAppBtn").onclick=()=>{history.replaceState(null,"",appUrl());setView("dashboardView")};setView("sharedView");return true}
 function exportBackup(){const blob=new Blob([JSON.stringify({app:"LUCIVARYN",version:1,exportedAt:new Date().toISOString(),entries},null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="lucivaryn-backup-"+dateNow()+".json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);const s=document.getElementById("backupStatus");if(s)s.textContent="Backup export started. Keep the downloaded JSON file somewhere safe."}
@@ -423,9 +415,7 @@ lucivarynSplash.classList.add("hide");
 setTimeout(() => {
 if (lucivarynSplash.isConnected) {
 lucivarynSplash.remove();
-}
-}, 700);
-}
+}}, 700);}
 if (lucivarynSplash) {
 if (document.readyState === "complete") {
 setTimeout(hideLucivarynSplash, 1500);
@@ -435,8 +425,7 @@ setTimeout(hideLucivarynSplash, 1500);
 }, { once: true });
 // Safety fallback in case the page load event is delayed.
 setTimeout(hideLucivarynSplash, 5000);
-}
-}
+}}
 stageSetup();
 selectSetup();
 renderAll();
@@ -446,8 +435,7 @@ if (lucivarynSplash) {
     lucivarynSplash.classList.add("hide");
     setTimeout(() => {
       lucivarynSplash.remove();
-    }, 700);
-  };
+    }, 700);};
  if (document.readyState === "complete") {
     setTimeout(hideSplash, 1200);
   } else {
@@ -455,8 +443,7 @@ if (lucivarynSplash) {
       setTimeout(hideSplash, 1200);
     }, { once: true });
   setTimeout(hideSplash, 5000);
-  }
-  }
+ }}
   stageSetup();selectSetup();renderAll();renderSharedView();
  // LUCIVARYN splash-screen startup
 (function () {
@@ -468,20 +455,16 @@ if (lucivarynSplash) {
      setTimeout(() => {
         splash.remove();
       }, 700);
-    }, 1800);
-  };
+    }, 1800);};
   const image = splash.querySelector("img");
   if (image && image.complete) {
-    hideSplash();
-  } else if (image) {
+    hideSplash(); } else if (image) {
     image.addEventListener("load", hideSplash, { once: true });
     image.addEventListener("error", hideSplash, { once: true });
     setTimeout(hideSplash, 4000);
   } else {
-    hideSplash();
-  }
-})();
-if("serviceWorker"in navigator&&location.protocol.startsWith("http"))window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+    hideSplash();}
+})();if("serviceWorker"in navigator&&location.protocol.startsWith("http"))window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
 </script>
 </body>
 </html>
