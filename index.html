@@ -388,14 +388,136 @@ function stageSetup(){document.getElementById("stageCards").innerHTML=STAGES.map
 function selectSetup(){document.getElementById("entryWorkspace").innerHTML=WORKSPACES.map(w=>`<option>${esc(w.name)}</option>`).join("");document.getElementById("workspaceFilter").innerHTML='<option value="">All workspaces</option>'+WORKSPACES.map(w=>`<option>${esc(w.name)}</option>`).join("");const so=STAGES.map(s=>`<option>${s}</option>`).join("");document.getElementById("entryStage").innerHTML=so;document.getElementById("stageFilter").innerHTML='<option value="">All stages</option>'+so}
 function entryCard(e){const title=e.title||"Untitled entry",workspace=e.workspace||"Revelation Library",stage=e.stage||"RECEIVE",content=e.content||"",date=e.date||"";return`<article class="entry"><div class="entry-title">${esc(title)} ${e.favorite?'<span style="color:var(--gold)">★</span>':""}</div><div class="entry-meta">${esc(workspace)} · ${esc(stage)} · ${niceDate(date)}${e.verse?" · "+esc(e.verse):""}</div><div class="entry-preview">${esc(content.slice(0,260))}${content.length>260?"…":""}</div>${e.next?`<p class="entry-meta">Next step: ${esc(e.next)}</p>`:""}${e.sourceEntryId?`<p class="entry-meta">Working copy transferred from ${esc(e.sourceStage||"another stage")}.</p>`:""}<div class="entry-actions"><button class="btn small" data-edit="${esc(e.id)}">Edit</button><button class="btn small" data-share-entry="${esc(e.id)}">↗ Share</button><button class="btn small" data-copy-entry="${esc(e.id)}">Copy text</button><button class="btn small" data-fav="${esc(e.id)}">${e.favorite?"★ Unfavorite":"☆ Favorite"}</button><button class="btn small" data-delete="${esc(e.id)}">Delete</button><select class="btn small" data-target-stage="${esc(e.id)}" aria-label="Choose destination stage">${STAGES.filter(s=>s!==stage).map(s=>`<option value="${s}">Send to ${s}</option>`).join("")}</select><button class="btn small primary" data-transfer="${esc(e.id)}">Transfer →</button></div></article>`}
 function bindEntryActions(root=document){root.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>editEntry(b.dataset.edit));root.querySelectorAll("[data-share-entry]").forEach(b=>b.onclick=()=>shareEntry(b.dataset.shareEntry));root.querySelectorAll("[data-copy-entry]").forEach(b=>b.onclick=()=>copyEntryText(b.dataset.copyEntry));root.querySelectorAll("[data-fav]").forEach(b=>b.onclick=()=>{const e=entries.find(x=>x.id===b.dataset.fav);if(e){e.favorite=!e.favorite;e.updated=new Date().toISOString();saveEntries()}});root.querySelectorAll("[data-delete]").forEach(b=>b.onclick=()=>{const e=entries.find(x=>x.id===b.dataset.delete);if(e&&confirm(`Delete “${e.title}”? This cannot be undone unless you have a backup.`)){entries=entries.filter(x=>x.id!==e.id);saveEntries()}});root.querySelectorAll("[data-transfer]").forEach(b=>b.onclick=()=>{const sel=b.closest(".entry")?.querySelector("[data-target-stage]");if(sel)sendToStage(b.dataset.transfer,sel.value)})}
-function transformForStage(source,targetStage){const title=source.title||"Untitled Insight",verse=source.verse||"No Scripture reference added",content=source.content||"",next=source.next||"No next step added";const original="ORIGINAL REVELATION\n\nTITLE: "+title+"\nSCRIPTURE: "+verse+"\nINSIGHT:\n"+content+"\n\nORIGINAL NEXT STEP:\n"+next;const prompts={
-RECEIVE:["RECEIVE — CAPTURE INSIGHT","WHAT I RECEIVED\n[Record the insight faithfully.]","KEY WORDS OR PHRASES\n[Record important words or phrases.]","INITIAL IMPRESSION\n[Describe what caught your attention.]","QUESTIONS TO REVISIT\n[Record anything that needs further understanding.]"],
-UNDERSTAND:["UNDERSTAND — FIND MEANING","CENTRAL MESSAGE\n[What is the main message of this insight?]","SCRIPTURE AND CONTEXT\n[Study the passage and its surrounding context.]","MEANING AND EXPLANATION\n[Explain what the insight means in clear language.]","QUESTIONS FOR UNDERSTANDING\n1. What is the central message?\n2. What does the Scripture or context establish?\n3. What does this mean in practical terms?\n4. What needs further study or clarification?","CLARIFICATIONS NEEDED\n[Record anything that still needs investigation.]","Note: These prompts are not verified conclusions."],
-DEVELOP:["DEVELOP — BUILD UNDERSTANDING","FOUNDATION OF THE MESSAGE\n[State the established central truth.]","SUPPORTING SCRIPTURES\n[Add relevant references and examine their context.]","DEVELOPED EXPLANATION\n[Expand the meaning into a clear, structured teaching.]","ILLUSTRATIONS AND EXAMPLES\n[Add suitable examples that clarify the message.]","PRACTICAL APPLICATION\n[Explain how the message can be applied.]","CONCLUSION\n[Summarise the main points.]","AREAS TO DEVELOP FURTHER\n[Record additional study or writing needed.]"],
-MULTIPLY:["MULTIPLY — SHARE WHAT GROWS","MESSAGE TO SHARE\n[Prepare the developed message for others.]","TARGET AUDIENCE\n[Who needs to receive this message?]","MAIN TAKEAWAY\n[What should the audience remember?]","CONTENT FORMAT\n[Choose a teaching, sermon, article, video, or social post.]","MESSAGE OUTLINE\n[Organise the key points for communication.]","CALL TO ACTION\n[What response or practical action is appropriate?]","SHARING PLAN\n[Record where and when the content will be shared.]"],
-ALIGN:["ALIGN — BRING LIFE INTO ORDER","PERSONAL REFLECTION\n[How does this message relate to my life?]","AREAS REQUIRING ALIGNMENT\n[Identify attitudes, habits, or priorities to examine.]","WHAT NEEDS TO CHANGE?\n[Describe the adjustment needed.]","SCRIPTURAL STANDARD\n[Identify relevant biblical principles and context.]","ALIGNMENT PLAN\n[Write specific steps toward the intended change.]","ACCOUNTABILITY AND REVIEW\n[How and when will I review my progress?]"],
-RELEASE:["RELEASE — PUT IT INTO ACTION","ACTION TO TAKE\n[What specifically needs to be done?]","PURPOSE\n[What outcome is this action intended to achieve?]","ACTION STEPS\n1. [First step]\n2. [Second step]\n3. [Third step]","DEADLINE\n[When will the action be completed?]","RESOURCES NEEDED\n[What support or resources are required?]","EVIDENCE OF PROGRESS\n[How will progress or completion be assessed?]","OUTCOME AND LESSONS\n[Record what happened and what was learned.]"]};
-const nextSteps={RECEIVE:"Preserve the insight and identify what needs further understanding.",UNDERSTAND:"Study the relevant Scripture and write a clear explanation.",DEVELOP:"Develop the insight into a structured teaching or study.",MULTIPLY:"Prepare and share the message with the intended audience.",ALIGN:"Identify and implement practical adjustments consistent with the message.",RELEASE:"Complete the planned action and record the outcome."};return{title,content:original+"\n\n================================\n"+(prompts[targetStage]||[]).join("\n\n") ,next:nextSteps[targetStage]||next}}
+function transformForStage(source, targetStage) {
+  const title = source.title || "Untitled Revelation";
+  const verse = source.verse || "No Scripture reference added";
+  const content = source.content || "";
+  const next = source.next || "No next step recorded";
+
+  const original =
+    "ORIGINAL REVELATION\n\n" +
+    "TITLE: " + title + "\n" +
+    "SCRIPTURE: " + verse + "\n\n" +
+    "ORIGINAL INSIGHT:\n" + content + "\n\n" +
+    "ORIGINAL NEXT STEP:\n" + next;
+
+  const stageDocuments = {
+    RECEIVE: {
+      title: "RECEIVE — CAPTURE INSIGHT",
+      sections: [
+        ["RECEIVED INSIGHT", content || "[Record the revelation faithfully.]"],
+        ["KEY WORDS AND PHRASES", "[Record the important words and phrases.]"],
+        ["INITIAL IMPRESSION", "[Capture the immediate impression without changing the original insight.]"],
+        ["ITEMS TO REVISIT", "[Record anything requiring further study or clarification.]"]
+      ],
+      next: "Preserve the original insight and prepare it for understanding."
+    },
+
+    UNDERSTAND: {
+      title: "UNDERSTAND — FIND MEANING",
+      sections: [
+        ["CENTRAL TRUTH", content || "[Develop the central truth of the revelation.]"],
+        ["SCRIPTURAL CONTEXT", "[Add the surrounding passage, biblical setting, and relevant context.]"],
+        ["MEANING AND EXPLANATION", "[Develop a clear explanation of the central truth.]"],
+        ["KEY INSIGHTS", "[Organise the main insights into clear points.]"],
+        ["CLARIFICATIONS AND FURTHER STUDY", "[Record areas requiring additional investigation.]"]
+      ],
+      next: "Develop a clear, context-aware explanation of the revelation."
+    },
+
+    DEVELOP: {
+      title: "DEVELOP — BUILD UNDERSTANDING",
+      sections: [
+        ["FOUNDATION OF THE MESSAGE", content || "[State the central truth being developed.]"],
+        ["SUPPORTING SCRIPTURES", "[Add relevant biblical references and examine their context.]"],
+        ["DEVELOPED TEACHING", "[Expand the material into a clear, structured explanation.]"],
+        ["KEY TEACHING POINTS", "[Organise the main points in a logical sequence.]"],
+        ["ILLUSTRATIONS AND EXAMPLES", "[Add examples that clarify the message.]"],
+        ["PRACTICAL APPLICATION", "[Develop practical applications of the message.]"],
+        ["CONCLUSION", "[Summarise the main teaching and its significance.]"]
+      ],
+      next: "Develop the material into a complete teaching, Bible study, or message."
+    },
+
+    MULTIPLY: {
+      title: "MULTIPLY — SHARE WHAT GROWS",
+      sections: [
+        ["CORE MESSAGE", content || "[Prepare the central message for communication.]"],
+        ["AUDIENCE AND PURPOSE", "[Describe the intended audience and purpose of the message.]"],
+        ["MAIN TAKEAWAY", "[State the central truth the audience should remember.]"],
+        ["CONTENT DRAFT", "[Develop the message into a post, article, teaching, sermon, or video script.]"],
+        ["CONTENT VARIATIONS", "[Adapt the core message for other suitable formats.]"],
+        ["CALL TO RESPONSE", "[Prepare an appropriate response or practical application.]"],
+        ["SHARING PLAN", "[Record the intended platform, schedule, and distribution plan.]"]
+      ],
+      next: "Prepare the message for its intended audience and content format."
+    },
+
+    ALIGN: {
+      title: "ALIGN — BRING LIFE INTO ORDER",
+      sections: [
+        ["TRUTH TO LIVE BY", content || "[Identify the central truth to apply personally.]"],
+        ["PERSONAL REFLECTION", "[Develop a personal reflection on the message.]"],
+        ["AREAS FOR ALIGNMENT", "[Identify relevant attitudes, habits, priorities, or decisions.]"],
+        ["SCRIPTURAL STANDARD", "[Record the biblical principles guiding the intended alignment.]"],
+        ["PRACTICAL ADJUSTMENTS", "[Describe the changes and adjustments to implement.]"],
+        ["PERSONAL ALIGNMENT PLAN", "[Set out practical steps and a review schedule.]"],
+        ["PROGRESS AND ACCOUNTABILITY", "[Record progress and areas requiring further attention.]"]
+      ],
+      next: "Turn the understood truth into practical personal alignment."
+    },
+
+    RELEASE: {
+      title: "RELEASE — PUT IT INTO ACTION",
+      sections: [
+        ["PURPOSE OF THE ACTION", content || "[State the truth or purpose guiding the action.]"],
+        ["INTENDED OUTCOME", "[Describe the intended outcome.]"],
+        ["ACTION PLAN", "[Develop clear, practical steps for implementation.]"],
+        ["MINISTRY OR ASSIGNMENT", "[Record the relevant ministry activity or responsibility.]"],
+        ["TIMELINE", "[Set dates and milestones for the planned action.]"],
+        ["RESOURCES AND SUPPORT", "[Record the resources and support required.]"],
+        ["PROGRESS RECORD", "[Document actions taken and evidence of progress.]"],
+        ["OUTCOME AND LESSONS", "[Record the outcome and lessons learned after implementation.]"]
+      ],
+      next: "Carry out the action plan and record the results."
+    }
+  };
+
+  const document = stageDocuments[targetStage];
+
+  if (!document) {
+    return {
+      title: title,
+      content: original,
+      next: next
+    };
+  }
+
+  const preparedSections = document.sections
+    .map(section => section[0] + "\n" + section[1])
+    .join("\n\n");
+
+  const adaptedContent =
+    "LUCIVARYN STAGE WORKSPACE\n" +
+    document.title + "\n\n" +
+    "SOURCE REVELATION\n" +
+    "Title: " + title + "\n" +
+    "Scripture: " + verse + "\n" +
+    "Received at: " + (source.stage || "RECEIVE") + "\n\n" +
+    "================================\n\n" +
+    preparedSections + "\n\n" +
+    "================================\n\n" +
+    "SOURCE MATERIAL — PRESERVED FOR REFERENCE\n\n" +
+    original;
+
+  return {
+    title: title,
+    content: adaptedContent,
+    next: document.next,
+    stageDocument: true,
+    stageDocumentVersion: 1
+  };
+  }
 function sendToStage(id,targetStage){const source=entries.find(e=>e.id===id);if(!source||!STAGES.includes(targetStage)){alert("Unable to transfer this entry.");return}if(source.stage===targetStage){alert("This entry is already in "+targetStage+".");return}if(!confirm(`Send "${source.title}" from ${source.stage} to ${targetStage}?\n\nA new working copy will be created. Your original remains unchanged.`))return;const transformed=transformForStage(source,targetStage),now=new Date().toISOString(),copy={...source,...transformed,id:uid(),stage:targetStage,sourceEntryId:source.id,sourceStage:source.stage,favorite:false,created:now,updated:now};entries.unshift(copy);if(!saveEntries()){entries=entries.filter(e=>e.id!==copy.id);renderAll();return}alert("Transfer successful. A new working copy was created in "+targetStage+". Your original remains preserved.")}
 function renderList(){const q=document.getElementById("searchInput").value.toLowerCase(),st=document.getElementById("stageFilter").value,ws=document.getElementById("workspaceFilter").value,sort=document.getElementById("sortFilter").value;let list=entries.filter(e=>(!q||[e.title,e.content,e.verse,e.next,e.workspace].join(" ").toLowerCase().includes(q))&&(!st||e.stage===st)&&(!ws||e.workspace===ws));list.sort((a,b)=>sort==="title"?(a.title||"").localeCompare(b.title||""):sort==="created"?(a.created||"").localeCompare(b.created||""):(b.updated||"").localeCompare(a.updated||""));const el=document.getElementById("entryList");el.innerHTML=list.length?list.map(entryCard).join(""):'<div class="empty">No entries match your search or filters.</div>';bindEntryActions(el)}
 function renderFavorites(){const list=entries.filter(e=>e.favorite).sort((a,b)=>(b.updated||"").localeCompare(a.updated||"")),el=document.getElementById("favoriteList");el.innerHTML=list.length?list.map(entryCard).join(""):'<div class="empty">No favorites yet. Favorite an entry to keep it here.</div>';bindEntryActions(el)}
