@@ -255,16 +255,30 @@ img {
     color: var(--gold2);
   }
   }
-  html, body, .app, main, .view {
-  background-color: #160B27 !important;
-  color: #F8F5FC;
+  html {
+  background: #160B27 !important;
   min-height: 100%;
   }
-body {margin: 0;
+body {
+  background: #160B27 !important;
+  color: #F8F5FC;
+  margin: 0;
+  min-height: 100vh;
+}
+.app {
+  background: #160B27 !important;
+  color: #F8F5FC;
+  min-height: 100vh;
+}
+main {
+  background: transparent !important;
+}
+.view {
+  background: transparent !important;
 }
 h1, h2, h3, p, label {
   color: #F8F5FC;
-    }
+}
 </style>
 </head>
  <body>
