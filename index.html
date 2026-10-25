@@ -45,32 +45,27 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}.app{max-width:1
   color: var(--gold2);
   margin-bottom: 6px;
 }
-
 .stage strong {
   display: block;
   font-size: 13px;
   color: var(--text);
 }
-
 .stage span:last-child {
   display: block;
   font-size: 11px;
   color: var(--muted);
   margin-top: 5px;
 }
-
 .stage:hover,
 .stage.active {
   border-color: var(--gold);
   background: linear-gradient(145deg, #42304F, #241634);
 }
-
 .workspace-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
-
 .workspace {
   min-width: 0;
   min-height: 120px;
@@ -80,26 +75,21 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}.app{max-width:1
   background: var(--panel);
   color: var(--text);
 }
-
 .workspace:hover {
   border-color: var(--gold);
 }
-
 .workspace h3,
 .workspace strong {
   color: var(--gold2);
 }
-
 .workspace p {
   color: var(--muted);
 }
-
 .content-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
 }
-
 .card {
   min-width: 0;
   padding: 18px;
@@ -107,12 +97,10 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}.app{max-width:1
   border-radius: var(--radius);
   background: var(--panel);
 }
-
 .card h2,
 .card h3 {
   margin-top: 0;
 }
-
 input,
 textarea,
 select {
@@ -124,25 +112,21 @@ select {
   background: var(--bg-deep);
   color: var(--text);
 }
-
 textarea {
   resize: vertical;
 }
-
 label {
   display: block;
   margin-bottom: 6px;
   color: var(--muted);
   font-size: 13px;
 }
-
 .stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
   margin: 20px 0;
 }
-
 .stat {
   min-width: 0;
   padding: 14px;
@@ -150,131 +134,102 @@ label {
   border-radius: 14px;
   background: var(--panel);
 }
-
 .stat strong {
   display: block;
   color: var(--gold2);
   font-size: 24px;
 }
-
 .stat span {
   color: var(--muted);
   font-size: 12px;
 }
-
 .view {
   display: none;
 }
-
 .view.active {
   display: block;
 }
-
 .mobile-nav {
   display: none;
 }
-
 .file-input {
   display: none;
 }
-
 .muted {
   color: var(--muted);
 }
-
 hr {
   border: 0;
   border-top: 1px solid var(--line);
   margin: 20px 0;
 }
-
 img {
   max-width: 100%;
 }
-
 @media (max-width: 800px) {
   .stages {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-
   .workspace-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
   .content-grid {
     grid-template-columns: 1fr;
   }
-
   .hero {
     padding: 24px 18px;
   }
-
   .top {
     align-items: flex-start;
   }
-
-  .top-actions .btn {
+ .top-actions .btn {
     padding: 8px 9px;
     font-size: 12px;
   }
 }
-
 @media (max-width: 480px) {
   .app {
     padding: 10px 12px 95px;
   }
-
   .brand-name {
     font-size: 16px;
   }
-
   .tagline {
     font-size: 10px;
   }
-
   .brand-logo {
     width: 42px;
     height: 42px;
   }
-
   .top-actions {
     flex-direction: column;
   }
-
   .stages {
     gap: 7px;
   }
-
   .stage {
     min-height: 92px;
     padding: 10px 8px;
   }
-
   .stage strong {
     font-size: 11px;
   }
-
   .stage span:last-child {
     font-size: 10px;
   }
-
   .workspace {
     padding: 12px;
     min-height: 100px;
   }
-
   .stats {
     gap: 6px;
   }
-
   .stat {
     padding: 10px;
   }
-
   .stat strong {
     font-size: 20px;
   }
-
   .mobile-nav {
     display: flex;
     position: fixed;
@@ -289,7 +244,6 @@ img {
     border-top: 1px solid var(--line);
     backdrop-filter: blur(14px);
   }
-
   .mobile-nav button {
     background: transparent;
     border: 0;
@@ -297,7 +251,6 @@ img {
     font-size: 10px;
     padding: 6px 5px;
   }
-
   .mobile-nav button.active {
     color: var(--gold2);
   }
